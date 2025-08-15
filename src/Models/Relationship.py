@@ -26,3 +26,4 @@ class Relationship(Model):
     database = db
     table_name = "Relationship"
     constraints = [Check("person1_id != person2_id")]
+    indexes = ((("person1", "person2", "type"), True),)
