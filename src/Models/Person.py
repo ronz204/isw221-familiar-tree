@@ -2,8 +2,6 @@ from Database.Peewee import db
 from Models.Family import Family
 from peewee import Model, AutoField, CharField, ForeignKeyField, IntegerField, DateField
 
-#, choices=[("M", "Male"), ("F", "Female")]
-
 class Person(Model):
   id = AutoField(primary_key=True)
   name = CharField(unique=True, max_length=100)
