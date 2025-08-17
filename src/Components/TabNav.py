@@ -1,7 +1,7 @@
 import tkinter as tk
 from Enums.Pallete import Pallete
 
-class Button(tk.Button):
+class TabNav(tk.Button):
   def __init__(self, widget: tk.Widget, text: str):
     super().__init__(widget, text=text, **STYLES)
 
