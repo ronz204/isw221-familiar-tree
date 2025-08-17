@@ -1,5 +1,5 @@
 import tkinter as tk
-from Enums.Pallete import Pallete
+from Enums.Colors import Colors
 from Components.TabNav import TabNav
 
 class Navigation(tk.Frame):
@@ -18,5 +18,5 @@ class Navigation(tk.Frame):
     self.grid_columnconfigure(0, weight=1)
 
 STYLES = {
-  "bg": Pallete.GREEN_200.value,
+  "bg": Colors.GREEN_200.value,
 }

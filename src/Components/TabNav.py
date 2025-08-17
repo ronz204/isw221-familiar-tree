@@ -1,5 +1,5 @@
 import tkinter as tk
-from Enums.Pallete import Pallete
+from Enums.Colors import Colors
 
 class TabNav(tk.Button):
   def __init__(self, widget: tk.Widget, text: str):
@@ -17,8 +17,8 @@ STYLES = {
   "height": 2,
   "anchor": "w",
 
-  "bg": Pallete.GREEN_200.value,
-  "fg": Pallete.WHITE_100.value,
-  "activebackground": Pallete.GREEN_100.value,
-  "activeforeground": Pallete.WHITE_100.value,
+  "bg": Colors.GREEN_200.value,
+  "fg": Colors.WHITE_100.value,
+  "activebackground": Colors.GREEN_100.value,
+  "activeforeground": Colors.WHITE_100.value,
 }
