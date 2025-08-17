@@ -1,9 +1,10 @@
 import tkinter as tk
+from Views.BaseView import BaseView
 from Components.Navigation import Navigation
 
-class DashView(tk.Frame):
-  def __init__(self, widget: tk.Widget):
-    super().__init__(widget)
+class DashView(BaseView):
+  def __init__(self, parent: tk.Widget):
+    super().__init__(parent)
     self.setup()
 
   def setup(self) -> None:
