@@ -7,15 +7,13 @@ class Navigation(tk.Frame):
     super().__init__(widget, **STYLES)
 
     tab1 = TabNav(self, text="Crear Familia")
-    tab1.grid(row=0, column=0, sticky="ew", padx=0, pady=(12, 0))
+    tab1.pack(fill="x", padx=0, pady=(12, 0))
 
     tab2 = TabNav(self, text="Crear Miembros")
-    tab2.grid(row=1, column=0, sticky="ew", padx=0, pady=(8, 0))
+    tab2.pack(fill="x", padx=0, pady=(8, 0))
 
     tab3 = TabNav(self, text="Crear Relaciones")
-    tab3.grid(row=2, column=0, sticky="ew", padx=0, pady=(8, 0))
-
-    self.grid_columnconfigure(0, weight=1)
+    tab3.pack(fill="x", padx=0, pady=(8, 0))
 
 STYLES = {
   "bg": Colors.GREEN_200.value,
