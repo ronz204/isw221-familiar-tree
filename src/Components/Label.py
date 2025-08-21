@@ -6,7 +6,9 @@ class Label(tk.Label):
     super().__init__(widget, **STYLES, text=text)
 
 STYLES = {
-  "font": ("Arial", 10),
-  "bg": Colors.GRAY_100.value,
-  "fg": Colors.GRAY_200.value
+  "anchor": "w",
+  "justify": "left",
+  "font": ("Arial", 10,  "bold"),
+  "bg": Colors.WHITE_100.value,
+  "fg": Colors.GRAY_800.value,
 }
