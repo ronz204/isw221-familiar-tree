@@ -16,8 +16,8 @@ class Person(Model):
   
   family = ForeignKeyField(Family, backref="members", null=True, on_delete="SET NULL")
   couple = ForeignKeyField("self", backref="partners", null=True, on_delete="SET NULL")
-  mother = ForeignKeyField("self", backref="children_from_mother", null=True, on_delete="SET NULL")
-  father = ForeignKeyField("self", backref="children_from_father", null=True, on_delete="SET NULL")
+  mother = ForeignKeyField("self", backref="mother", null=True, on_delete="SET NULL")
+  father = ForeignKeyField("self", backref="father", null=True, on_delete="SET NULL")
 
   class Meta:
     database = db
