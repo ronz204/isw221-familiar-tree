@@ -1,3 +1,4 @@
+from Database.Peewee import db
 from Models.Family import Family
 from Models.Person import Person
 from peewee import SqliteDatabase
@@ -17,3 +18,6 @@ class Migrator:
     finally:
       if not self.db.is_closed():
         self.db.close()
+
+migrator = Migrator(db)
+migrator.migrate() 
