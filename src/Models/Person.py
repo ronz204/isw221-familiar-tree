@@ -11,8 +11,11 @@ class Person(Model):
   emotional = IntegerField(default=100)
   birthdate = DateField()
   deathdate = DateField(null=True)
-  couple = ForeignKeyField("self", backref="partners", null=True, on_delete="SET NULL")
+  
   family = ForeignKeyField(Family, backref="members", null=True, on_delete="SET NULL")
+  couple = ForeignKeyField("self", backref="partners", null=True, on_delete="SET NULL")
+  mother = ForeignKeyField("self", backref="children_from_mother", null=True, on_delete="SET NULL")
+  father = ForeignKeyField("self", backref="children_from_father", null=True, on_delete="SET NULL")
 
   class Meta:
     database = db
