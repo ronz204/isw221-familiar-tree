@@ -8,6 +8,10 @@ class Router:
     self.current: Optional[BaseView] = None
     self.views: Dict[Type[BaseView], BaseView] = {}
 
+    self.widget.grid_propagate(False)
+    self.widget.grid_rowconfigure(0, weight=1)
+    self.widget.grid_columnconfigure(0, weight=1)
+
   def navigate(self, view: Type[BaseView]) -> None:
     if self.current: self.current.grid_forget()
 

@@ -16,9 +16,8 @@ class Layout(tk.Frame):
     self.left_frame = tk.Frame(self, bg=Colors.GREEN_200.value)
     self.left_frame.grid(row=0, column=0, sticky="nsew")
 
-    self.right_frame = tk.Frame(self, bg=Colors.WHITE_100.value)
+    self.right_frame = tk.Frame(self, bg=Colors.WHITE_100.value, padx=32, pady=28)
     self.right_frame.grid(row=0, column=1, sticky="nsew")
-    self.right_frame.grid_propagate(False)
 
     self.router = Router(self.right_frame)
     self.render_linkers()
