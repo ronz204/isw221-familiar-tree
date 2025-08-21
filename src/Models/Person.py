@@ -9,6 +9,8 @@ class Person(Model):
   gender = CharField(max_length=10, choices=[("M", "Male"), ("F", "Female")])
   province = CharField(max_length=100)
   emotional = IntegerField(default=100)
+  
+  age = IntegerField()
   birthdate = DateField()
   deathdate = DateField(null=True)
   
