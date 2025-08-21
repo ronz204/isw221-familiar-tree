@@ -17,8 +17,8 @@ STYLES = {
   "height": 2,
   "anchor": "w",
 
-  "bg": Colors.GREEN_200.value,
+  "bg": Colors.GREEN_900.value,
   "fg": Colors.WHITE_100.value,
-  "activebackground": Colors.GREEN_100.value,
+  "activebackground": Colors.GREEN_800.value,
   "activeforeground": Colors.WHITE_100.value,
 }

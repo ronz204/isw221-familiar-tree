@@ -13,7 +13,7 @@ class Layout(tk.Frame):
     self.grid_columnconfigure(0, weight=1)
     self.grid_columnconfigure(1, weight=19)
 
-    self.left_frame = tk.Frame(self, bg=Colors.GREEN_200.value)
+    self.left_frame = tk.Frame(self, bg=Colors.GREEN_900.value)
     self.left_frame.grid(row=0, column=0, sticky="nsew")
 
     self.right_frame = tk.Frame(self, bg=Colors.WHITE_100.value, padx=32, pady=28)
