@@ -1,9 +1,10 @@
 import tkinter as tk
 from Views.BaseView import BaseView
+from Events.EventBroker import EventBroker
 
 class MemberView(BaseView):
-  def __init__(self, widget: tk.Widget):
-    super().__init__(widget)
+  def __init__(self, widget: tk.Widget, broker: EventBroker):
+    super().__init__(widget, broker)
     self.render()
 
   def render(self) -> None:
