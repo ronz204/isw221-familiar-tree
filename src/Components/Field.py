@@ -18,7 +18,7 @@ class Field(tk.Entry):
 
 STYLES = {
   "bd": 1,
-  "relief": tk.RIDGE,
+  "relief": tk.GROOVE,
   "font": ("Arial", 10),
   "fg": Colors.GRAY_800.value,
   "bg": Colors.WHITE_100.value,

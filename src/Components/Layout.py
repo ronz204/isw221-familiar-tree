@@ -32,10 +32,6 @@ class Layout(tk.Frame):
     self.linker2.config(command=lambda: self.router.navigate(Routes.MEMBER.value))
     self.linker2.pack(fill="x", padx=0, pady=(8, 0))
 
-    self.linker3 = Linker(self.left_frame, text="Registrar Relacion")
-    self.linker3.config(command=lambda: self.router.navigate(Routes.RELATION.value))
-    self.linker3.pack(fill="x", padx=0, pady=(8, 0))
-
 STYLES = {
   "bg": Colors.GREEN_200.value,
 }
