@@ -145,16 +145,13 @@ class PersonScreen(tk.Frame):
 
   def refresh_options(self):
     self.families = list(Family.select())
-    family_names = [""] + [family.name for family in self.families]
-    self.family_combo['values'] = family_names
+    self.family_combo['values'] = [""] + [family.name for family in self.families]
 
     self.fathers = list(Person.select().where(Person.gender == "M"))
-    father_names = [""] + [father.name for father in self.fathers]
-    self.father_combo['values'] = father_names
+    self.father_combo['values'] = [""] + [father.name for father in self.fathers]
 
     self.mothers = list(Person.select().where(Person.gender == "F"))
-    mother_names = [""] + [mother.name for mother in self.mothers]
-    self.mother_combo['values'] = mother_names
+    self.mother_combo['values'] = [""] + [mother.name for mother in self.mothers]
 
   def get_selected_id(self, combo: ttk.Combobox, records: List[Any]):
     index = combo.current()
