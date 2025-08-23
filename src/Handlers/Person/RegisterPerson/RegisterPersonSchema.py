@@ -14,6 +14,5 @@ class RegisterPersonSchema(BaseModel):
   deathdate: Optional[date] = None
 
   family_id: Optional[int] = None
-  couple_id: Optional[int] = None
   mother_id: Optional[int] = None
   father_id: Optional[int] = None

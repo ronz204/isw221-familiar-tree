@@ -26,7 +26,6 @@ class RegisterPersonHandler(Handler):
         birthdate=validated.birthdate,
         deathdate=validated.deathdate,
         family=validated.family_id,
-        couple=validated.couple_id,
         mother=validated.mother_id,
         father=validated.father_id,
       )
