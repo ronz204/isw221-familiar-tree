@@ -1,12 +1,13 @@
 from Database.Peewee import db
+from peewee import SqliteDatabase
 from Models.Family import Family
 from Models.Person import Person
-from peewee import SqliteDatabase
+from Models.Timeline import Timeline
 
 class Migrator:
   def __init__(self, database: SqliteDatabase):
     self.db = database
-    self.models = [Family, Person]
+    self.models = [Family, Person, Timeline]
 
   def migrate(self) -> None:
     try:
