@@ -1,15 +1,11 @@
 from typing import Dict, Any
 from Models.Person import Person
 from Handlers.Handler import Handler
-from Events.EventBroker import EventBroker
 from Events.Person.PersonRegisteredEvent import PersonRegisteredEvent
 from Handlers.Person.RegisterPerson.RegisterPersonSchema import RegisterPersonSchema
 
 class RegisterPersonHandler(Handler):
-  def __init__(self, broker: EventBroker):
-    self.broker = broker
-
-  def handle(self, data: Dict[str, Any]) -> None:
+  def execute(self, data: Dict[str, Any]) -> None:
     try:
       validated = RegisterPersonSchema(**data)
 
