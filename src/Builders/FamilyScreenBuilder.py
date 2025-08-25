@@ -23,7 +23,7 @@ class FamilyScreenBuilder:
     self.button_frame.grid(row=3, column=0, columnspan=2, sticky="ew")
 
   def build_title(self):
-    self.title_label = tk.Label(self.container, text="Registrar Familia", font=("Helvetica", 16))
+    self.title_label = tk.Label(self.container, text="Registrar Familia", font=("", 16, "bold"))
     self.title_label.grid(row=0, column=0, pady=10)
   
   def build_name_field(self):
