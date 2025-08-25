@@ -17,5 +17,6 @@ class RegisterFamilyHandler(Handler):
         "id": family.id,
         "name": family.name
       }))
+
     except Exception as e:
       print(f"Error creating family: {e}")

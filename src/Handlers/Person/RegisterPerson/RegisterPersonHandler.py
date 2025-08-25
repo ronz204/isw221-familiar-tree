@@ -32,5 +32,6 @@ class RegisterPersonHandler(Handler):
         "cedula": person.cedula,
         "gender": person.gender,
       }))
+
     except Exception as e:
       print(f"Error creating person: {e}")
