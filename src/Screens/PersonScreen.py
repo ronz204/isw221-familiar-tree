@@ -37,20 +37,23 @@ class PersonScreen(tk.Frame, Listener):
 
     self.builder.build_save_button(self.on_save_person)
     self.builder.build_discard_button(self.on_discard_person)
+    self.builder.load_data_hydration()
 
   def subscribe_to_events(self):
     self.broker.subscribe("person_registered", self)
 
   def on_person_registered(self, data: Dict[str, Any]):
     print("Person registered with data:", data)
-    self.builder.refresh_options()
+    self.builder.load_data_hydration()
 
   def handle(self, event: Event):
     if event.name == "person_registered":
       self.on_person_registered(event.data)
 
   def on_save_person(self):
-    pass
+    data = self.builder.get_form_data()
+    self.register_person_handler.execute(data)
+    self.builder.clear_form()
 
   def on_discard_person(self):
-    pass
+    self.builder.clear_form()
