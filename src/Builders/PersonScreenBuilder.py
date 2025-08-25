@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from Models.Person import Person
 from Models.Family import Family
-from typing import Callable, List
+from typing import Any, Callable, List
 
 class PersonScreenBuilder:
   def __init__(self, parent: tk.Widget):
@@ -112,3 +112,45 @@ class PersonScreenBuilder:
     self.discard_button = tk.Button(self.right_frame, text="Discard", command=command)
     self.discard_button.config(width=12, height=2, font=("", 11, "bold"))
     self.discard_button.grid(row=2, column=0)
+
+  def load_data_hydration(self):
+    self.families = list(Family.select())
+    self.family_combo["values"] = [""] + [family.name for family in self.families]
+
+    self.fathers = list(Person.select().where(Person.gender == "M"))
+    self.father_combo["values"] = [""] + [father.name for father in self.fathers]
+
+    self.mothers = list(Person.select().where(Person.gender == "F"))
+    self.mother_combo["values"] = [""] + [mother.name for mother in self.mothers]
+  
+  def get_selected_id(self, combo: ttk.Combobox, records: List[Any]):
+    index = combo.current()
+    if index <= 0: return None
+    return records[index - 1].id
+  
+  def get_form_data(self):
+    return {
+      "name": self.name_entry.get(),
+      "cedula": self.cedula_entry.get(),
+      "gender": self.gender_var.get(),
+      "province": self.province_entry.get(),
+      "age": int(self.age_entry.get()),
+      "birthdate": self.birthdate_entry.get(),
+      "emotional": int(self.emotional_entry.get()) if self.emotional_entry.get() else 100,
+      "family_id": self.get_selected_id(self.family_combo, self.families),
+      "father_id": self.get_selected_id(self.father_combo, self.fathers),
+      "mother_id": self.get_selected_id(self.mother_combo, self.mothers),
+    }
+
+  def clear_form(self):
+    self.name_entry.delete(0, tk.END)
+    self.cedula_entry.delete(0, tk.END)
+    self.gender_var.set("")
+    self.province_entry.delete(0, tk.END)
+    self.age_entry.delete(0, tk.END)
+    self.birthdate_entry.delete(0, tk.END)
+    self.emotional_entry.delete(0, tk.END)
+    self.emotional_entry.insert(0, "100")
+    self.family_combo.set("")
+    self.father_combo.set("")
+    self.mother_combo.set("")
