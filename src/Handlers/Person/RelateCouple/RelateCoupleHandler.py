@@ -16,6 +16,9 @@ class RelateCoupleHandler(Handler):
       if person1.couple or person2.couple: return
       if person1.gender == person2.gender: return
 
+      if abs(person1.age - person2.age) > 15: return
+      if person1.age < 18 or person2.age < 18: return
+
       person1.couple = person2
       person1.save()
 
