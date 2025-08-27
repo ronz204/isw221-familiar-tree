@@ -39,8 +39,8 @@ class FamilyScreen(tk.Frame, Listener):
       self.on_family_created(event.data)
 
   def on_save_family(self):
-    family_name = self.builder.name_entry.get()
-    self.register_family_handler.execute(family_name)
+    name = self.builder.name_entry.get()
+    self.register_family_handler.execute({ "name": name })
     self.builder.name_entry.delete(0, tk.END)
 
   def on_discard_family(self):
