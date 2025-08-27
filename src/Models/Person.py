@@ -14,11 +14,12 @@ class Person(Model):
   birthdate = DateField()
   deathdate = DateField(null=True)
 
-  family = ForeignKeyField(Family, backref="members", null=True, on_delete="SET NULL")
-  couple = ForeignKeyField("self", backref="partners", null=True, on_delete="SET NULL")
-  guardian = ForeignKeyField("self", backref="children", null=True, on_delete="SET NULL")
+  guard = ForeignKeyField("self", backref="children", null=True, on_delete="SET NULL")
   mother = ForeignKeyField("self", backref="children_of_mother", null=True, on_delete="SET NULL")
   father = ForeignKeyField("self", backref="children_of_father", null=True, on_delete="SET NULL")
+
+  paternal_family = ForeignKeyField(Family, backref="paternal_members", null=True, on_delete="SET NULL")
+  maternal_family = ForeignKeyField(Family, backref="maternal_members", null=True, on_delete="SET NULL")
 
   class Meta:
     database = db
