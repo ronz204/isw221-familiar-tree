@@ -3,7 +3,6 @@ from tkinter import ttk
 from Scheduler import Scheduler
 from Events.Broker import Broker
 
-from Screens.FamilyScreen import FamilyScreen
 from Screens.PersonScreen import PersonScreen
 from Screens.RelateScreen import RelateScreen
 
@@ -22,7 +21,6 @@ window.config(padx=20, pady=20)
 notebook = ttk.Notebook(window)
 notebook.pack(fill="both", expand=True)
 
-notebook.add(FamilyScreen(notebook, broker), text="Familia")
 notebook.add(PersonScreen(notebook, broker), text="Persona")
 notebook.add(RelateScreen(notebook, broker), text="Relaciones")
 
