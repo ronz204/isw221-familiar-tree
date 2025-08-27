@@ -4,14 +4,14 @@ from Database.Seeder import Seeder
 from Events.Event import Event as Ev
 
 from Handlers.Person.DeathPerson.DeathPersonEvent import DeathPersonEvent
-from Handlers.Person.RelateCouple.RelateCoupleEvent import RelateCoupleEvent
+from Handlers.Person.RelatePerson.RelatePersonEvent import RelatePersonEvent
 from Handlers.Family.RegisterFamily.RegisterFamilyEvent import RegisterFamilyEvent
 from Handlers.Person.RegisterPerson.RegisterPersonEvent import RegisterPersonEvent
 from Handlers.Person.BirthdaysPerson.BirthdaysPersonEvent import BirthdaysPersonEvent
 
 EVENTS: List[Ev] = [
   DeathPersonEvent,
-  RelateCoupleEvent,
+  RelatePersonEvent,
   RegisterFamilyEvent,
   RegisterPersonEvent,
   BirthdaysPersonEvent,
