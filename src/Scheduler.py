@@ -2,7 +2,7 @@ from typing import Dict
 from threading import Timer
 from Handlers.Handler import Handler
 
-class ScheduleHelper:
+class Scheduler:
   def __init__(self):
     self.timers: Dict[str, Timer] = {}
 
