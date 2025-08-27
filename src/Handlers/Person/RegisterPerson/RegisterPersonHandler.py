@@ -1,7 +1,9 @@
 from typing import Dict, Any
+from Models.Event import Event
 from Models.Person import Person
 from Events.Broker import Broker
 from Handlers.Handler import Handler
+from Models.Timeline import Timeline
 
 from Handlers.Person.RegisterPerson.RegisterPersonEvent import RegisterPersonEvent
 from Handlers.Person.RegisterPerson.RegisterPersonSchema import RegisterPersonSchema
@@ -16,6 +18,10 @@ class RegisterPersonHandler(Handler[RegisterPersonSchema]):
 
     person, created = Person.get_or_create(**validated.model_dump())
     if not created: return
+
+    year = person.birthdate.year
+    event = Event.get(Event.name == RegisterPersonEvent.name)
+    Timeline.create(person_id=person.id, event_id=event.id, year=year)
 
     self.broker.publish(RegisterPersonEvent({
       "id": person.id,

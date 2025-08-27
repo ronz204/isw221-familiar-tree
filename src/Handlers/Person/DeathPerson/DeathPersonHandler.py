@@ -1,9 +1,11 @@
 from random import random
 from datetime import datetime
+from Models.Event import Event
 from Models.Person import Person
 from Events.Broker import Broker
 from typing import Dict, Any, List
 from Handlers.Handler import Handler
+from Models.Timeline import Timeline
 
 from Handlers.Person.DeathPerson.DeathPersonEvent import DeathPersonEvent
 from Handlers.Person.DeathPerson.DeathPersonSchema import DeathPersonSchema
@@ -22,6 +24,10 @@ class DeathPersonHandler(Handler[DeathPersonSchema]):
       if random.random() < 0.05:
         person.deathdate = datetime.now()
         person.save()
+
+        year = person.deathdate.year
+        event = Event.get(Event.name == DeathPersonEvent.name)
+        Timeline.create(person_id=person.id, event_id=event.id, year=year)
 
         self.broker.publish(DeathPersonEvent({
           "person_id": person.id,

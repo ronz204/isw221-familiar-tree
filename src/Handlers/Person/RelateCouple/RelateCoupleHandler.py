@@ -1,7 +1,10 @@
+import datetime as dt
 from typing import Dict, Any
+from Models.Event import Event
 from Models.Person import Person
 from Events.Broker import Broker
 from Handlers.Handler import Handler
+from Models.Timeline import Timeline
 
 from Handlers.Person.RelateCouple.RelateCoupleEvent import RelateCoupleEvent
 from Handlers.Person.RelateCouple.RelateCoupleSchema import RelateCoupleSchema
@@ -30,6 +33,11 @@ class RelateCoupleHandler(Handler[RelateCoupleSchema]):
 
     person2.couple = person1
     person2.save()
+
+    year = dt.datetime.now().year
+    event = Event.get(Event.name == RelateCoupleEvent.name)
+    Timeline.create(person_id=person1.id, event_id=event.id, year=year)
+    Timeline.create(person_id=person2.id, event_id=event.id, year=year)
 
     self.broker.publish(RelateCoupleEvent({
       "person1_id": person1.id,
