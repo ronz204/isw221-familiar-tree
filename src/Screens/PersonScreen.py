@@ -3,7 +3,9 @@ from typing import Dict, Any
 from Events.Event import Event
 from Events.Broker import Broker
 from Events.Listener import Listener
+
 from Builders.PersonScreenBuilder import PersonScreenBuilder
+from Handlers.Person.RegisterPerson.RegisterPersonEvent import RegisterPersonEvent
 from Handlers.Person.RegisterPerson.RegisterPersonHandler import RegisterPersonHandler
 
 class PersonScreen(tk.Frame, Listener):
@@ -34,21 +36,21 @@ class PersonScreen(tk.Frame, Listener):
     self.builder.build_family_field()
     self.builder.build_father_field()
     self.builder.build_mother_field()
+    self.builder.build_guardian_field()
 
     self.builder.build_save_button(self.on_save_person)
     self.builder.build_discard_button(self.on_discard_person)
     self.builder.load_data_hydration()
 
   def subscribe_to_events(self):
-    self.broker.subscribe("person_registered", self)
+    self.broker.subscribe(RegisterPersonEvent.name, self)
 
-  def on_person_registered(self, data: Dict[str, Any]):
-    print("Person registered with data:", data)
+  def on_register_person(self, data: Dict[str, Any]):
     self.builder.load_data_hydration()
 
   def handle(self, event: Event):
-    if event.name == "person_registered":
-      self.on_person_registered(event.data)
+    if event.name == RegisterPersonEvent.name:
+      self.on_register_person(event.data)
 
   def on_save_person(self):
     data = self.builder.get_form_data()

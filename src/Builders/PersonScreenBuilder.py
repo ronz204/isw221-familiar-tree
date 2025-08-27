@@ -103,6 +103,12 @@ class PersonScreenBuilder:
     self.mother_combo = ttk.Combobox(self.center_frame, state="readonly", width=18)
     self.mother_combo.grid(row=8, column=0, sticky="ew", pady=(0, 12))
 
+  def build_guardian_field(self):
+    self.guardian_label = tk.Label(self.center_frame, text="Guardian:")
+    self.guardian_label.grid(row=9, column=0, sticky="w", pady=(0, 5))
+    self.guardian_combo = ttk.Combobox(self.center_frame, state="readonly", width=18)
+    self.guardian_combo.grid(row=10, column=0, sticky="ew", pady=(0, 12))
+
   def build_save_button(self, command: Callable):
     self.save_button = tk.Button(self.right_frame, text="Save", command=command)
     self.save_button.config(width=12, height=2, font=("", 11, "bold"))
@@ -122,6 +128,9 @@ class PersonScreenBuilder:
 
     self.mothers = list(Person.select().where(Person.gender == "F"))
     self.mother_combo["values"] = [""] + [mother.name for mother in self.mothers]
+
+    self.guardians = list(Person.select())
+    self.guardian_combo["values"] = [""] + [guardian.name for guardian in self.guardians]
   
   def get_selected_id(self, combo: ttk.Combobox, records: List[Any]):
     index = combo.current()
@@ -140,6 +149,7 @@ class PersonScreenBuilder:
       "family_id": self.get_selected_id(self.family_combo, self.families),
       "father_id": self.get_selected_id(self.father_combo, self.fathers),
       "mother_id": self.get_selected_id(self.mother_combo, self.mothers),
+      "guardian_id": self.get_selected_id(self.guardian_combo, self.guardians),
     }
 
   def clear_form(self):
@@ -151,6 +161,7 @@ class PersonScreenBuilder:
     self.birthdate_entry.delete(0, tk.END)
     self.emotional_entry.delete(0, tk.END)
     self.emotional_entry.insert(0, "100")
+    self.guardian_combo.set("")
     self.family_combo.set("")
     self.father_combo.set("")
     self.mother_combo.set("")
