@@ -3,7 +3,7 @@ from Models.Person import Person
 from Events.Broker import Broker
 from Handlers.Handler import Handler
 
-from Events.Person.PersonRegisteredEvent import PersonRegisteredEvent
+from Handlers.Person.RegisterPerson.RegisterPersonEvent import RegisterPersonEvent
 from Handlers.Person.RegisterPerson.RegisterPersonSchema import RegisterPersonSchema
 
 class RegisterPersonHandler(Handler[RegisterPersonSchema]):
@@ -17,7 +17,7 @@ class RegisterPersonHandler(Handler[RegisterPersonSchema]):
     person, created = Person.get_or_create(**validated.model_dump())
     if not created: return
 
-    self.broker.publish(PersonRegisteredEvent({
+    self.broker.publish(RegisterPersonEvent({
       "id": person.id,
       "name": person.name,
       "cedula": person.cedula,
