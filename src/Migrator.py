@@ -4,12 +4,11 @@ from peewee import SqliteDatabase
 from Database.Seeder import Seeder
 
 from Models.Event import Event
-from Models.Family import Family
 from Models.Person import Person
 from Models.Timeline import Timeline
 from Models.Relation import Relation
 
-from Database.Seeders.EventSeeder import EventSeeder
+from Seeders.EventSeeder import EventSeeder
 
 SEEDERS: List[Seeder] = [
   EventSeeder,
@@ -18,7 +17,7 @@ SEEDERS: List[Seeder] = [
 class Migrator:
   def __init__(self, database: SqliteDatabase):
     self.db = database
-    self.models = [Event, Family, Person, Timeline, Relation]
+    self.models = [Event, Person, Timeline, Relation]
 
   def migrate(self) -> None:
     try:
