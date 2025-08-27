@@ -1,4 +1,4 @@
-from random import random
+import random
 from datetime import datetime
 from Models.Event import Event
 from Models.Person import Person
