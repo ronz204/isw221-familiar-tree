@@ -3,7 +3,7 @@ from Models.Family import Family
 from Events.Broker import Broker
 from Handlers.Handler import Handler
 
-from Events.Family.FamilyRegisteredEvent import FamilyRegisteredEvent
+from Handlers.Family.RegisterFamily.RegisterFamilyEvent import RegisterFamilyEvent
 from Handlers.Family.RegisterFamily.RegisterFamilySchema import RegisterFamilySchema
 
 class RegisterFamilyHandler(Handler[RegisterFamilySchema]):
@@ -16,8 +16,8 @@ class RegisterFamilyHandler(Handler[RegisterFamilySchema]):
 
     family, created = Family.get_or_create(**validated.model_dump())
     if not created: return
-  
-    self.broker.publish(FamilyRegisteredEvent({
+
+    self.broker.publish(RegisterFamilyEvent({
       "id": family.id,
       "name": family.name
     }))
