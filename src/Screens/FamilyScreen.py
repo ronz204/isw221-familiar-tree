@@ -3,7 +3,9 @@ from typing import Dict, Any
 from Events.Event import Event
 from Events.Broker import Broker
 from Events.Listener import Listener
+
 from Builders.FamilyScreenBuilder import FamilyScreenBuilder
+from Handlers.Family.RegisterFamily.RegisterFamilyEvent import RegisterFamilyEvent
 from Handlers.Family.RegisterFamily.RegisterFamilyHandler import RegisterFamilyHandler
 
 class FamilyScreen(tk.Frame, Listener):
@@ -29,14 +31,14 @@ class FamilyScreen(tk.Frame, Listener):
     self.builder.build_discard_button(self.on_discard_family)
 
   def subscribe_to_events(self):
-    self.broker.subscribe("family_created", self)
+    self.broker.subscribe(RegisterFamilyEvent.name, self)
 
-  def on_family_created(self, data: Dict[str, Any]):
-    print("Family created with data:", data)
+  def on_register_family(self, data: Dict[str, Any]):
+    print("Family registered with data:", data)
 
   def handle(self, event: Event):
-    if (event.name == "family_created"):
-      self.on_family_created(event.data)
+    if (event.name == RegisterFamilyEvent.name):
+      self.on_register_family(event.data)
 
   def on_save_family(self):
     name = self.builder.name_entry.get()
