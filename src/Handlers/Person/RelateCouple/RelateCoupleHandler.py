@@ -3,7 +3,7 @@ from Models.Person import Person
 from Events.Broker import Broker
 from Handlers.Handler import Handler
 
-from Events.Person.CoupleRelatedEvent import CoupleRelatedEvent
+from Handlers.Person.RelateCouple.RelateCoupleEvent import RelateCoupleEvent
 from Handlers.Person.RelateCouple.RelateCoupleSchema import RelateCoupleSchema
 
 class RelateCoupleHandler(Handler[RelateCoupleSchema]):
@@ -31,7 +31,7 @@ class RelateCoupleHandler(Handler[RelateCoupleSchema]):
     person2.couple = person1
     person2.save()
 
-    self.broker.publish(CoupleRelatedEvent({
+    self.broker.publish(RelateCoupleEvent({
       "person1_id": person1.id,
       "person1_name": person1.name,
       "person2_id": person2.id,
