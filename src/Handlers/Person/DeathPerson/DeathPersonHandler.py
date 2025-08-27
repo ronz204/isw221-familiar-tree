@@ -5,7 +5,7 @@ from Events.Broker import Broker
 from typing import Dict, Any, List
 from Handlers.Handler import Handler
 
-from Events.Person.DeathPersonEvent import DeathPersonEvent
+from Handlers.Person.DeathPerson.DeathPersonEvent import DeathPersonEvent
 from Handlers.Person.DeathPerson.DeathPersonSchema import DeathPersonSchema
 
 class DeathPersonHandler(Handler[DeathPersonSchema]):
