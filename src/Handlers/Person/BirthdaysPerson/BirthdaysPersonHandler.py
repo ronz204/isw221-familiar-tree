@@ -3,7 +3,7 @@ from Events.Broker import Broker
 from typing import Dict, Any, List
 from Handlers.Handler import Handler
 
-from Events.Person.BirthdaysPersonEvent import BirthdaysPersonEvent
+from Handlers.Person.BirthdaysPerson.BirthdaysPersonEvent import BirthdaysPersonEvent
 from Handlers.Person.BirthdaysPerson.BirthdaysPersonSchema import BirthdaysPersonSchema
 
 class BirthdaysPersonHandler(Handler[BirthdaysPersonSchema]):
