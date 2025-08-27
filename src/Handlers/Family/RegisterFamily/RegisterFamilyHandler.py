@@ -1,22 +1,23 @@
 from typing import Dict, Any
 from Models.Family import Family
+from Events.Broker import Broker
 from Handlers.Handler import Handler
+
 from Events.Family.FamilyRegisteredEvent import FamilyRegisteredEvent
 from Handlers.Family.RegisterFamily.RegisterFamilySchema import RegisterFamilySchema
 
-class RegisterFamilyHandler(Handler):
-  def execute(self, data: Dict[str, Any]) -> None:
-    try:
-      validated = RegisterFamilySchema(**data)
+class RegisterFamilyHandler(Handler[RegisterFamilySchema]):
+  def __init__(self, broker: Broker):
+    super().__init__(broker, RegisterFamilySchema)
 
-      existing = Family.select().where(Family.name == validated.name).first()
-      if existing: return
+  def execute(self, data: Dict[str, Any]):
+    validated = self.validate(data)
+    if not validated: return
 
-      family = Family.create(name=validated.name)
-      self.broker.publish(FamilyRegisteredEvent({
-        "id": family.id,
-        "name": family.name
-      }))
-
-    except Exception as e:
-      print(f"Error creating family: {e}")
+    family, created = Family.get_or_create(**validated.model_dump())
+    if not created: return
+  
+    self.broker.publish(FamilyRegisteredEvent({
+      "id": family.id,
+      "name": family.name
+    }))
