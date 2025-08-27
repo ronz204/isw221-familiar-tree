@@ -1,37 +1,25 @@
 from typing import Dict, Any
 from Models.Person import Person
+from Events.Broker import Broker
 from Handlers.Handler import Handler
+
 from Events.Person.PersonRegisteredEvent import PersonRegisteredEvent
 from Handlers.Person.RegisterPerson.RegisterPersonSchema import RegisterPersonSchema
 
-class RegisterPersonHandler(Handler):
+class RegisterPersonHandler(Handler[RegisterPersonSchema]):
+  def __init__(self, broker: Broker):
+    super().__init__(broker, RegisterPersonSchema)
+
   def execute(self, data: Dict[str, Any]) -> None:
-    try:
-      validated = RegisterPersonSchema(**data)
+    validated = self.validate(data)
+    if not validated: return
 
-      existing = Person.select().where(Person.cedula == validated.cedula).first()
-      if existing: return
+    person, created = Person.get_or_create(**validated.model_dump())
+    if not created: return
 
-      person = Person.create(
-        name=validated.name,
-        cedula=validated.cedula,
-        gender=validated.gender,
-        province=validated.province,
-        emotional=validated.emotional,
-        age=validated.age,
-        birthdate=validated.birthdate,
-        deathdate=validated.deathdate,
-        family=validated.family_id,
-        mother=validated.mother_id,
-        father=validated.father_id,
-      )
-
-      self.broker.publish(PersonRegisteredEvent({
-        "id": person.id,
-        "name": person.name,
-        "cedula": person.cedula,
-        "gender": person.gender,
-      }))
-
-    except Exception as e:
-      print(f"Error creating person: {e}")
+    self.broker.publish(PersonRegisteredEvent({
+      "id": person.id,
+      "name": person.name,
+      "cedula": person.cedula,
+      "gender": person.gender,
+    }))
