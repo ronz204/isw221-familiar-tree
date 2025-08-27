@@ -33,7 +33,6 @@ class PersonScreen(tk.Frame, Listener):
     self.builder.build_emotional_field()
 
     self.builder.build_gender_field()
-    self.builder.build_family_field()
     self.builder.build_father_field()
     self.builder.build_mother_field()
     self.builder.build_guardian_field()
