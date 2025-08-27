@@ -1,17 +1,18 @@
 import tkinter as tk
 from tkinter import ttk
+from Scheduler import Scheduler
 from Events.Broker import Broker
+
 from Screens.FamilyScreen import FamilyScreen
 from Screens.PersonScreen import PersonScreen
 from Screens.RelateScreen import RelateScreen
 
-from Helpers.ScheduleHelper import ScheduleHelper
-from Handlers.Person.Birthdate.BirthdateHandler import BirthdateHandler
-from Handlers.Person.Deathdate.DeathdateHandler import DeathdateHandler
+from Handlers.Person.DeathPerson.DeathPersonHandler import DeathPersonHandler
+from Handlers.Person.BirthdaysPerson.BirthdaysPersonHandler import BirthdaysPersonHandler
 
 window = tk.Tk()
 broker = Broker()
-scheduler = ScheduleHelper()
+scheduler = Scheduler()
 
 window.geometry("1200x600")
 window.title("Familiar Tree")
@@ -25,8 +26,8 @@ notebook.add(FamilyScreen(notebook, broker), text="Familia")
 notebook.add(PersonScreen(notebook, broker), text="Persona")
 notebook.add(RelateScreen(notebook, broker), text="Relaciones")
 
-scheduler.start(BirthdateHandler(broker), 10, "birthdate")
-# scheduler.start(DeathdateHandler(broker), 15, "deathdate")
+scheduler.start(DeathPersonHandler(broker), 40, "death")
+scheduler.start(BirthdaysPersonHandler(broker), 15, "birthdays")
 
 def on_closing():
   scheduler.stop_all()
