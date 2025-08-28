@@ -1,10 +1,11 @@
 from typing import Dict, Any
 from Models.Event import Event
 from Models.Person import Person
-from Models.Relation import Relation
 from Events.Broker import Broker
+from Models.Relation import Relation
 from Handlers.Handler import Handler
 from Models.Timeline import Timeline
+from Models.Enums.Status import Status
 
 from Handlers.Person.RelatePerson.RelatePersonEvent import RelatePersonEvent
 from Handlers.Person.RelatePerson.RelatePersonSchema import RelatePersonSchema
@@ -20,13 +21,16 @@ class RelatePersonHandler(Handler[RelatePersonSchema]):
     man: Person = Person.get_by_id(validated.man_id)
     woman: Person = Person.get_by_id(validated.woman_id)
 
-    if not man or not woman: return
-    if man.gender == woman.gender: return
-
     if abs(man.age - woman.age) > 15: return
     if man.age < 18 or woman.age < 18: return
 
     Relation.create(man=man, woman=woman, year=validated.year)
+
+    man.status = Status.MARRIED.value
+    woman.status = Status.MARRIED.value
+
+    man.save()
+    woman.save()
 
     event = Event.get(Event.name == RelatePersonEvent.name)
     Timeline.create(person_id=man.id, event_id=event.id, year=validated.year)

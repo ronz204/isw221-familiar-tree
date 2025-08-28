@@ -2,7 +2,7 @@ import tkinter as tk
 import datetime as dt
 from tkinter import ttk
 from Models.Person import Person
-from Models.Relation import Relation
+from Models.Enums.Status import Status
 from typing import Callable, List, Any
 
 class RelateScreenBuilder:
@@ -67,19 +67,16 @@ class RelateScreenBuilder:
     self.discard_button.grid(row=0, column=1, padx=(10, 0), sticky="w")
 
   def load_data_hydration(self):
-    related_men_ids = Relation.select(Relation.man)
-    related_women_ids = Relation.select(Relation.woman)
+    emotional_predicate = Person.emotional >= 70
+    deathdate_predicate = Person.deathdate.is_null()
+    status_predicate = ((Person.status == Status.SINGLE.value) | (Person.status == Status.WIDOWED.value))
 
     self.men = list(Person.select().where(
-      (Person.gender == "M") & 
-      (Person.id.not_in(related_men_ids)) &
-      (Person.deathdate.is_null())
+      (Person.gender == "M") & emotional_predicate & deathdate_predicate & status_predicate
     ))
 
     self.women = list(Person.select().where(
-      (Person.gender == "F") & 
-      (Person.id.not_in(related_women_ids)) &
-      (Person.deathdate.is_null())
+      (Person.gender == "F")  & emotional_predicate & deathdate_predicate & status_predicate
     ))
 
     men_names = [f"{man.name}" for man in self.men]
