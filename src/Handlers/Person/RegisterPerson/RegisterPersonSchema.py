@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 class RegisterPersonSchema(BaseModel):
-  name: str = Field(min_length=2, max_length=20)
+  name: str = Field(min_length=2, max_length=40)
   cedula: str = Field(min_length=9, max_length=9)
   gender: str = Field(pattern="^(M|F)$")
   province: str = Field(min_length=2, max_length=100)
