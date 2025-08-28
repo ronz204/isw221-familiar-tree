@@ -2,6 +2,7 @@ from Models.Person import Person
 from Events.Broker import Broker
 from typing import Dict, Any, List
 from Handlers.Handler import Handler
+from Models.Enums.Status import Status
 
 from Handlers.Person.BirthdaysPerson.BirthdaysPersonEvent import BirthdaysPersonEvent
 from Handlers.Person.BirthdaysPerson.BirthdaysPersonSchema import BirthdaysPersonSchema
@@ -18,6 +19,10 @@ class BirthdaysPersonHandler(Handler[BirthdaysPersonSchema]):
 
     for person in people:
       person.age += 1
+
+      if (person.status == Status.SINGLE | person.status == Status.WIDOWED):
+        if person.emotional == 0: return
+        person.emotional -= 2
       person.save()
 
       self.broker.publish(BirthdaysPersonEvent({
