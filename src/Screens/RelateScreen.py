@@ -53,7 +53,6 @@ class RelateScreen(tk.Frame, Listener):
 
   def on_save_relation(self):
     data = self.builder.get_form_data()
-    if not data["person1_id"] or not data["person2_id"]: return
     self.relate_person_handler.execute(data)
 
   def on_discard_relation(self):

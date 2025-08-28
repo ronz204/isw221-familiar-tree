@@ -17,25 +17,25 @@ class RelatePersonHandler(Handler[RelatePersonSchema]):
     validated = self.validate(data)
     if not validated: return
 
-    person1: Person = Person.get_by_id(validated.person1_id)
-    person2: Person = Person.get_by_id(validated.person2_id)
+    man: Person = Person.get_by_id(validated.man_id)
+    woman: Person = Person.get_by_id(validated.woman_id)
 
-    if not person1 or not person2: return
-    if person1.gender == person2.gender: return
+    if not man or not woman: return
+    if man.gender == woman.gender: return
 
-    if abs(person1.age - person2.age) > 15: return
-    if person1.age < 18 or person2.age < 18: return
+    if abs(man.age - woman.age) > 15: return
+    if man.age < 18 or woman.age < 18: return
 
-    Relation.create(person1=person1, person2=person2, year=validated.year)
+    Relation.create(man=man, woman=woman, year=validated.year)
 
     event = Event.get(Event.name == RelatePersonEvent.name)
-    Timeline.create(person_id=person1.id, event_id=event.id, year=validated.year)
-    Timeline.create(person_id=person2.id, event_id=event.id, year=validated.year)
+    Timeline.create(person_id=man.id, event_id=event.id, year=validated.year)
+    Timeline.create(person_id=woman.id, event_id=event.id, year=validated.year)
 
     self.broker.publish(RelatePersonEvent({
       "year": validated.year,
-      "person1_id": person1.id,
-      "person1_name": person1.name,
-      "person2_id": person2.id,
-      "person2_name": person2.name,
+      "man_id": man.id,
+      "man_name": man.name,
+      "woman_id": woman.id,
+      "woman_name": woman.name,
     }))
