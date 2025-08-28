@@ -17,6 +17,8 @@ class Person(Model):
   mother = ForeignKeyField("self", backref="children_of_mother", null=True, on_delete="SET NULL")
   father = ForeignKeyField("self", backref="children_of_father", null=True, on_delete="SET NULL")
 
+  status = CharField(max_length=20, choices=[("S", "Single"), ("M", "Married"), ("W", "Widowed"), ("D", "Deathed")], default="S")
+
   class Meta:
     database = db
     table_name = "Person"
