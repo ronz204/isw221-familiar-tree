@@ -25,7 +25,7 @@ notebook.pack(fill="both", expand=True)
 notebook.add(PersonScreen(notebook, broker), text="Persona")
 notebook.add(RelateScreen(notebook, broker), text="Relaciones")
 
-scheduler.start(BirthPersonHandler(broker), 30, "birth")
+scheduler.start(BirthPersonHandler(broker), 35, "birth")
 scheduler.start(DeathPersonHandler(broker), 40, "death")
 scheduler.start(BirthdaysPersonHandler(broker), 15, "birthdays")
 
