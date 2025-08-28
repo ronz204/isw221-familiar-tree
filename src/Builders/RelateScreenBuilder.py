@@ -1,12 +1,13 @@
 import tkinter as tk
+import datetime as dt
 from tkinter import ttk
 from Models.Person import Person
+from Models.Relation import Relation
 from typing import Callable, List
 
 class RelateScreenBuilder:
   def __init__(self, parent: tk.Widget):
     self.parent = parent
-
     self.people: List[Person] = []
 
   def build_layout(self):
@@ -46,6 +47,13 @@ class RelateScreenBuilder:
     self.person2_combo = ttk.Combobox(self.form_frame, state="readonly", width=25)
     self.person2_combo.grid(row=1, column=1, sticky="ew", pady=(0, 15), padx=(10, 0))
 
+  def build_year_field(self):
+    self.year_label = tk.Label(self.form_frame, text="Año de la relación:")
+    self.year_label.grid(row=2, column=0, sticky="w", pady=(0, 5), padx=(0, 10))
+    self.year_entry = tk.Entry(self.form_frame, width=25)
+    self.year_entry.grid(row=3, column=0, sticky="ew", pady=(0, 15), padx=(0, 10))
+    self.year_entry.insert(0, str(dt.datetime.now().year))
+
   def build_relate_button(self, command: Callable):
     self.relate_button = tk.Button(self.button_frame, text="Relacionar", command=command)
     self.relate_button.config(width=15, height=2, font=("", 11, "bold"))
@@ -57,7 +65,9 @@ class RelateScreenBuilder:
     self.discard_button.grid(row=0, column=1, padx=(10, 0), sticky="w")
 
   def load_data_hydration(self):
-    self.people = list(Person.select().where(Person.couple.is_null()))
+    related_ids = (Relation.select(Relation.person1).union(Relation.select(Relation.person2)))
+    
+    self.people = list(Person.select().where(Person.id.not_in(related_ids)))
     person_names = [f"{person.name}" for person in self.people]
     
     self.person1_combo["values"] = [""] + person_names
@@ -72,8 +82,11 @@ class RelateScreenBuilder:
     return {
       "person1_id": self.get_selected_id(self.person1_combo),
       "person2_id": self.get_selected_id(self.person2_combo),
+      "year": int(self.year_entry.get().strip())
     }
   
   def clear_form(self):
     self.person1_combo.set("")
     self.person2_combo.set("")
+    self.year_entry.delete(0, tk.END)
+    self.year_entry.insert(0, str(dt.datetime.now().year))

@@ -7,7 +7,6 @@ from peewee import Model, AutoField, ForeignKeyField, IntegerField, TimestampFie
 class Timeline(Model):
   id = AutoField(primary_key=True)
   year = IntegerField()
-  timestamp = TimestampField(default=dt.datetime.now)
   event = ForeignKeyField(Event, backref="timelines", on_delete="CASCADE")
   person = ForeignKeyField(Person, backref="timelines", on_delete="CASCADE")
 
