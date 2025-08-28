@@ -1,4 +1,3 @@
-import datetime as dt
 from Database.Peewee import db
 from Models.Event import Event
 from Models.Person import Person

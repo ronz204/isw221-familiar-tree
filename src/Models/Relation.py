@@ -1,4 +1,3 @@
-import datetime as dt
 from Database.Peewee import db
 from Models.Person import Person
 from peewee import Model, AutoField, ForeignKeyField, TimestampField, IntegerField
