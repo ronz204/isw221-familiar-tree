@@ -26,8 +26,8 @@ class RelateScreen(tk.Frame, Listener):
     self.builder.build_title()
     self.builder.build_frames()
 
-    self.builder.build_person1_field()
-    self.builder.build_person2_field()
+    self.builder.build_man_field()
+    self.builder.build_woman_field()
     self.builder.build_year_field()
 
     self.builder.build_relate_button(self.on_save_relation)

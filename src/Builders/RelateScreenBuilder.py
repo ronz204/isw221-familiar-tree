@@ -3,12 +3,14 @@ import datetime as dt
 from tkinter import ttk
 from Models.Person import Person
 from Models.Relation import Relation
-from typing import Callable, List
+from typing import Callable, List, Any
 
 class RelateScreenBuilder:
   def __init__(self, parent: tk.Widget):
     self.parent = parent
-    self.people: List[Person] = []
+
+    self.men: List[Person] = []
+    self.women: List[Person] = []
 
   def build_layout(self):
     for index in range(3):
@@ -35,17 +37,17 @@ class RelateScreenBuilder:
     self.button_frame.grid_columnconfigure(1, weight=1)
     self.button_frame.grid(row=2, column=0, columnspan=2, sticky="ew")
 
-  def build_person1_field(self):
-    self.person1_label = tk.Label(self.form_frame, text="Primera Persona:")
-    self.person1_label.grid(row=0, column=0, sticky="w", pady=(0, 5), padx=(0, 10))
-    self.person1_combo = ttk.Combobox(self.form_frame, state="readonly", width=25)
-    self.person1_combo.grid(row=1, column=0, sticky="ew", pady=(0, 15), padx=(0, 10))
+  def build_man_field(self):
+    self.man_label = tk.Label(self.form_frame, text="Hombre:")
+    self.man_label.grid(row=0, column=0, sticky="w", pady=(0, 5), padx=(0, 10))
+    self.man_combo = ttk.Combobox(self.form_frame, state="readonly", width=25)
+    self.man_combo.grid(row=1, column=0, sticky="ew", pady=(0, 15), padx=(0, 10))
 
-  def build_person2_field(self):
-    self.person2_label = tk.Label(self.form_frame, text="Segunda Persona:")
-    self.person2_label.grid(row=0, column=1, sticky="w", pady=(0, 5), padx=(10, 0))
-    self.person2_combo = ttk.Combobox(self.form_frame, state="readonly", width=25)
-    self.person2_combo.grid(row=1, column=1, sticky="ew", pady=(0, 15), padx=(10, 0))
+  def build_woman_field(self):
+    self.woman_label = tk.Label(self.form_frame, text="Mujer:")
+    self.woman_label.grid(row=0, column=1, sticky="w", pady=(0, 5), padx=(10, 0))
+    self.woman_combo = ttk.Combobox(self.form_frame, state="readonly", width=25)
+    self.woman_combo.grid(row=1, column=1, sticky="ew", pady=(0, 15), padx=(10, 0))
 
   def build_year_field(self):
     self.year_label = tk.Label(self.form_frame, text="Año de la relación:")
@@ -65,28 +67,41 @@ class RelateScreenBuilder:
     self.discard_button.grid(row=0, column=1, padx=(10, 0), sticky="w")
 
   def load_data_hydration(self):
-    related_ids = (Relation.select(Relation.person1).union(Relation.select(Relation.person2)))
-    
-    self.people = list(Person.select().where(Person.id.not_in(related_ids)))
-    person_names = [f"{person.name}" for person in self.people]
-    
-    self.person1_combo["values"] = [""] + person_names
-    self.person2_combo["values"] = [""] + person_names
+    related_men_ids = Relation.select(Relation.man)
+    related_women_ids = Relation.select(Relation.woman)
 
-  def get_selected_id(self, combo: ttk.Combobox):
+    self.men = list(Person.select().where(
+      (Person.gender == "M") & 
+      (Person.id.not_in(related_men_ids)) &
+      (Person.deathdate.is_null())
+    ))
+
+    self.women = list(Person.select().where(
+      (Person.gender == "F") & 
+      (Person.id.not_in(related_women_ids)) &
+      (Person.deathdate.is_null())
+    ))
+
+    men_names = [f"{man.name}" for man in self.men]
+    women_names = [f"{woman.name}" for woman in self.women]
+    
+    self.man_combo["values"] = [""] + men_names
+    self.woman_combo["values"] = [""] + women_names
+
+  def get_selected_id(self, combo: ttk.Combobox, records: List[Any]):
     index = combo.current()
     if index <= 0: return None
-    return self.people[index - 1].id
+    return records[index - 1].id
   
   def get_form_data(self):
     return {
-      "person1_id": self.get_selected_id(self.person1_combo),
-      "person2_id": self.get_selected_id(self.person2_combo),
+      "man_id": self.get_selected_id(self.man_combo, self.men),
+      "woman_id": self.get_selected_id(self.woman_combo, self.women),
       "year": int(self.year_entry.get().strip())
     }
   
   def clear_form(self):
-    self.person1_combo.set("")
-    self.person2_combo.set("")
+    self.man_combo.set("")
+    self.woman_combo.set("")
     self.year_entry.delete(0, tk.END)
     self.year_entry.insert(0, str(dt.datetime.now().year))

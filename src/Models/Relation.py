@@ -5,8 +5,8 @@ from peewee import Model, AutoField, ForeignKeyField, TimestampField, IntegerFie
 class Relation(Model):
   id = AutoField(primary_key=True)
   year = IntegerField()
-  person1 = ForeignKeyField(Person, backref="relations_as_person1", on_delete="CASCADE")
-  person2 = ForeignKeyField(Person, backref="relations_as_person2", on_delete="CASCADE")
+  man = ForeignKeyField(Person, backref="relations_as_man", on_delete="CASCADE")
+  woman = ForeignKeyField(Person, backref="relations_as_woman", on_delete="CASCADE")
 
   class Meta:
     database = db
