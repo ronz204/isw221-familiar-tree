@@ -12,6 +12,8 @@ class GenealogyAnalyzer:
     relationship = self.check_direct_relationship(person1, person2)
     if relationship != GenealogyTypes.NO_RELATION: return GenealogyReport(relationship, 1)
 
+    return GenealogyReport(GenealogyTypes.NO_RELATION, -1)
+
   def check_direct_relationship(self, person1: Person, person2: Person) -> GenealogyTypes:
     if person1.id == person2.father_id or person1.id == person2.mother_id:
       return GenealogyTypes.PARENT
