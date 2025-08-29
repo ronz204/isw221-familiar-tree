@@ -99,12 +99,12 @@ class PersonScreenBuilder:
     self.guardian_combo.grid(row=10, column=0, sticky="ew", pady=(0, 12))
 
   def build_save_button(self, command: Callable):
-    self.save_button = tk.Button(self.right_frame, text="Save", command=command)
+    self.save_button = tk.Button(self.right_frame, text="Guardar", command=command)
     self.save_button.config(width=12, height=2, font=("", 11, "bold"))
     self.save_button.grid(row=1, column=0, pady=(0, 15))
 
   def build_discard_button(self, command: Callable):
-    self.discard_button = tk.Button(self.right_frame, text="Discard", command=command)
+    self.discard_button = tk.Button(self.right_frame, text="Descartar", command=command)
     self.discard_button.config(width=12, height=2, font=("", 11, "bold"))
     self.discard_button.grid(row=2, column=0)
 
