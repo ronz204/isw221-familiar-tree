@@ -5,6 +5,7 @@ from Events.Broker import Broker
 
 from Screens.PersonScreen import PersonScreen
 from Screens.RelateScreen import RelateScreen
+from Screens.RecentBirthsScreen import RecentBirthsScreen
 from Screens.BetweenPeopleScreen import BetweenPeopleScreen
 from Screens.DeceasedPeopleScreen import DeceasedPeopleScreen
 from Screens.ChildrenTogetherScreen import ChildrenTogetherScreen
@@ -29,6 +30,7 @@ notebook.add(PersonScreen(notebook, broker), text="Persona")
 notebook.add(RelateScreen(notebook, broker), text="Relaciones")
 
 notebook.add(BetweenPeopleScreen(notebook, broker), text="Consulta #1")
+notebook.add(RecentBirthsScreen(notebook, broker), text="Consulta #5")
 notebook.add(ChildrenTogetherScreen(notebook, broker), text="Consulta #6")
 notebook.add(DeceasedPeopleScreen(notebook, broker), text="Consulta #7")
 
