@@ -68,10 +68,10 @@ class PersonScreenBuilder:
 
   def build_emotional_field(self):
     self.emotional_label = tk.Label(self.left_frame, text="Estado emocional:")
-    self.emotional_label.grid(row=11, column=0, sticky="w", pady=(0, 5))
+    self.emotional_label.grid(row=13, column=0, sticky="w", pady=(0, 5))
     self.emotional_entry = tk.Entry(self.left_frame, font=("", 10), width=20)
     self.emotional_entry.insert(0, "100")
-    self.emotional_entry.grid(row=12, column=0, sticky="ew", pady=(0, 12))
+    self.emotional_entry.grid(row=14, column=0, sticky="ew", pady=(0, 12))
 
   def build_gender_field(self):
     self.gender_label = tk.Label(self.center_frame, text="Género:")
@@ -97,6 +97,12 @@ class PersonScreenBuilder:
     self.guardian_label.grid(row=9, column=0, sticky="w", pady=(0, 5))
     self.guardian_combo = ttk.Combobox(self.center_frame, state="readonly", width=18)
     self.guardian_combo.grid(row=10, column=0, sticky="ew", pady=(0, 12))
+
+  def build_deathdate_field(self):
+    self.deathdate_label = tk.Label(self.left_frame, text="Fecha defunción (opcional):")
+    self.deathdate_label.grid(row=11, column=0, sticky="w", pady=(0, 5))
+    self.deathdate_entry = tk.Entry(self.left_frame, font=("", 10), width=20)
+    self.deathdate_entry.grid(row=12, column=0, sticky="ew", pady=(0, 12))
 
   def build_save_button(self, command: Callable):
     self.save_button = tk.Button(self.right_frame, text="Guardar", command=command)
@@ -131,6 +137,7 @@ class PersonScreenBuilder:
       "province": self.province_entry.get(),
       "age": int(self.age_entry.get()),
       "birthdate": self.birthdate_entry.get(),
+      "deathdate": self.deathdate_entry.get() if self.deathdate_entry.get() else None,
       "emotional": int(self.emotional_entry.get()) if self.emotional_entry.get() else 100,
       "father_id": self.get_selected_id(self.father_combo, self.fathers),
       "mother_id": self.get_selected_id(self.mother_combo, self.mothers),
@@ -144,6 +151,7 @@ class PersonScreenBuilder:
     self.province_entry.delete(0, tk.END)
     self.age_entry.delete(0, tk.END)
     self.birthdate_entry.delete(0, tk.END)
+    self.deathdate_entry.delete(0, tk.END)
     self.emotional_entry.delete(0, tk.END)
     self.emotional_entry.insert(0, "100")
     self.guardian_combo.set("")

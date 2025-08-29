@@ -30,6 +30,7 @@ class PersonScreen(tk.Frame, Listener):
     self.builder.build_province_field()
     self.builder.build_age_field()
     self.builder.build_birthdate_field()
+    self.builder.build_deathdate_field()
     self.builder.build_emotional_field()
 
     self.builder.build_gender_field()

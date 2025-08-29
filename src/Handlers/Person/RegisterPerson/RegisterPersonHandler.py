@@ -4,6 +4,7 @@ from Models.Person import Person
 from Events.Broker import Broker
 from Handlers.Handler import Handler
 from Models.Timeline import Timeline
+from Models.Enums.Status import Status
 
 from Handlers.Person.RegisterPerson.RegisterPersonEvent import RegisterPersonEvent
 from Handlers.Person.RegisterPerson.RegisterPersonSchema import RegisterPersonSchema
@@ -16,7 +17,12 @@ class RegisterPersonHandler(Handler[RegisterPersonSchema]):
     validated = self.validate(data)
     if not validated: return
 
-    person, created = Person.get_or_create(**validated.model_dump())
+    person_data = validated.model_dump()
+
+    if person_data.get("deathdate"):
+      person_data["status"] = Status.DEATHED.value
+
+    person, created = Person.get_or_create(**person_data)
     if not created: return
 
     year = person.birthdate.year
