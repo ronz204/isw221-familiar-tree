@@ -13,6 +13,6 @@ class RegisterPersonSchema(BaseModel):
   birthdate: date
   deathdate: Optional[date] = None
 
-  mother: Optional[int] = None
-  father: Optional[int] = None
-  guardian: Optional[int] = None
+  mother_id: Optional[int] = None
+  father_id: Optional[int] = None
+  guardian_id: Optional[int] = None
