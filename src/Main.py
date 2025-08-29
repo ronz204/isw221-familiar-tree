@@ -6,6 +6,7 @@ from Events.Broker import Broker
 from Screens.PersonScreen import PersonScreen
 from Screens.RelateScreen import RelateScreen
 from Screens.BetweenPeopleScreen import BetweenPeopleScreen
+from Screens.DeceasedPeopleScreen import DeceasedPeopleScreen
 
 from Handlers.Person.BirthPerson.BirthPersonHandler import BirthPersonHandler
 from Handlers.Person.DeathPerson.DeathPersonHandler import DeathPersonHandler
@@ -27,6 +28,7 @@ notebook.add(PersonScreen(notebook, broker), text="Persona")
 notebook.add(RelateScreen(notebook, broker), text="Relaciones")
 
 notebook.add(BetweenPeopleScreen(notebook, broker), text="Consulta #1")
+notebook.add(DeceasedPeopleScreen(notebook, broker), text="Consulta #7")
 
 """ scheduler.start(BirthPersonHandler(broker), 35, "birth")
 scheduler.start(DeathPersonHandler(broker), 40, "death")
