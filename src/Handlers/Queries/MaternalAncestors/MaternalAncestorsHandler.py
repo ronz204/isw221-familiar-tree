@@ -2,8 +2,8 @@ from typing import Dict, Any
 from Models.Person import Person
 from Events.Broker import Broker
 from Handlers.Handler import Handler
-from Genealogy.GenealogyAnalyzer import GenealogyAnalyzer
 
+from Genealogy.GenealogyAnalyzer import GenealogyAnalyzer
 from Handlers.Queries.MaternalAncestors.MaternalAncestorsEvent import MaternalAncestorsEvent
 from Handlers.Queries.MaternalAncestors.MaternalAncestorsSchema import MaternalAncestorsSchema
 
