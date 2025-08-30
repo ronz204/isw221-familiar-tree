@@ -11,6 +11,7 @@ from Screens.BetweenPeopleScreen import BetweenPeopleScreen
 from Screens.DeceasedPeopleScreen import DeceasedPeopleScreen
 from Screens.ChildrenTogetherScreen import ChildrenTogetherScreen
 from Screens.FirstGradeCousinsScreen import FirstGradeCousinsScreen
+from Screens.MaternalAncestorsScreen import MaternalAncestorsScreen
 
 from Handlers.Person.BirthPerson.BirthPersonHandler import BirthPersonHandler
 from Handlers.Person.DeathPerson.DeathPersonHandler import DeathPersonHandler
@@ -34,6 +35,7 @@ notebook.add(RelatePeopleScreen(notebook, broker), text="Relaciones")
 
 notebook.add(BetweenPeopleScreen(notebook, broker), text="Consulta #1")
 notebook.add(FirstGradeCousinsScreen(notebook, broker), text="Consulta #2")
+notebook.add(MaternalAncestorsScreen(notebook, broker), text="Consulta #3")
 notebook.add(RecentBirthsScreen(notebook, broker), text="Consulta #5")
 notebook.add(ChildrenTogetherScreen(notebook, broker), text="Consulta #6")
 notebook.add(DeceasedPeopleScreen(notebook, broker), text="Consulta #7")
