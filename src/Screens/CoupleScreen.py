@@ -53,7 +53,7 @@ class CoupleScreen(tk.Frame, Listener):
 
   def on_save_relation(self):
     data = self.builder.get_form_data()
-    self.relate_person_handler.execute(data)
+    self.couple_person_handler.execute(data)
 
   def on_discard_relation(self):
     self.builder.clear_form()
