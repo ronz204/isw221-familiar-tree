@@ -80,24 +80,6 @@ class PersonScreenBuilder:
     self.gender_combo = ttk.Combobox(self.center_frame, textvariable=self.gender_var, values=["M", "F"], state="readonly", width=18)
     self.gender_combo.grid(row=2, column=0, sticky="ew", pady=(0, 12))
 
-  def build_father_field(self):
-    self.father_label = tk.Label(self.center_frame, text="Padre:")
-    self.father_label.grid(row=5, column=0, sticky="w", pady=(0, 5))
-    self.father_combo = ttk.Combobox(self.center_frame, state="readonly", width=18)
-    self.father_combo.grid(row=6, column=0, sticky="ew", pady=(0, 12))
-
-  def build_mother_field(self):
-    self.mother_label = tk.Label(self.center_frame, text="Madre:")
-    self.mother_label.grid(row=7, column=0, sticky="w", pady=(0, 5))
-    self.mother_combo = ttk.Combobox(self.center_frame, state="readonly", width=18)
-    self.mother_combo.grid(row=8, column=0, sticky="ew", pady=(0, 12))
-
-  def build_guardian_field(self):
-    self.guardian_label = tk.Label(self.center_frame, text="Guardian:")
-    self.guardian_label.grid(row=9, column=0, sticky="w", pady=(0, 5))
-    self.guardian_combo = ttk.Combobox(self.center_frame, state="readonly", width=18)
-    self.guardian_combo.grid(row=10, column=0, sticky="ew", pady=(0, 12))
-
   def build_deathdate_field(self):
     self.deathdate_label = tk.Label(self.left_frame, text="Fecha defunción (opcional):")
     self.deathdate_label.grid(row=11, column=0, sticky="w", pady=(0, 5))
@@ -114,15 +96,7 @@ class PersonScreenBuilder:
     self.discard_button.config(width=12, height=2, font=("", 11, "bold"))
     self.discard_button.grid(row=2, column=0)
 
-  def load_data_hydration(self):
-    self.fathers: List[Person] = list(Person.select().where(Person.gender == "M"))
-    self.father_combo["values"] = [""] + [father.name for father in self.fathers]
-
-    self.mothers: List[Person] = list(Person.select().where(Person.gender == "F"))
-    self.mother_combo["values"] = [""] + [mother.name for mother in self.mothers]
-
-    self.guardians: List[Person] = list(Person.select())
-    self.guardian_combo["values"] = [""] + [guardian.name for guardian in self.guardians]
+  def load_data_hydration(self): pass
   
   def get_selected_id(self, combo: ttk.Combobox, records: List[Any]):
     index = combo.current()
@@ -139,9 +113,6 @@ class PersonScreenBuilder:
       "birthdate": self.birthdate_entry.get(),
       "deathdate": self.deathdate_entry.get() if self.deathdate_entry.get() else None,
       "emotional": int(self.emotional_entry.get()) if self.emotional_entry.get() else 100,
-      "father_id": self.get_selected_id(self.father_combo, self.fathers),
-      "mother_id": self.get_selected_id(self.mother_combo, self.mothers),
-      "guardian_id": self.get_selected_id(self.guardian_combo, self.guardians),
     }
 
   def clear_form(self):
@@ -154,6 +125,3 @@ class PersonScreenBuilder:
     self.deathdate_entry.delete(0, tk.END)
     self.emotional_entry.delete(0, tk.END)
     self.emotional_entry.insert(0, "100")
-    self.guardian_combo.set("")
-    self.father_combo.set("")
-    self.mother_combo.set("")

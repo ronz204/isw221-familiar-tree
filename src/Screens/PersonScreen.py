@@ -32,11 +32,7 @@ class PersonScreen(tk.Frame, Listener):
     self.builder.build_birthdate_field()
     self.builder.build_deathdate_field()
     self.builder.build_emotional_field()
-
     self.builder.build_gender_field()
-    self.builder.build_father_field()
-    self.builder.build_mother_field()
-    self.builder.build_guardian_field()
 
     self.builder.build_save_button(self.on_save_person)
     self.builder.build_discard_button(self.on_discard_person)

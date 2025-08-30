@@ -12,7 +12,3 @@ class RegisterPersonSchema(BaseModel):
   age: int = Field(ge=0, le=100)
   birthdate: date
   deathdate: Optional[date] = None
-
-  mother_id: Optional[int] = None
-  father_id: Optional[int] = None
-  guardian_id: Optional[int] = None
