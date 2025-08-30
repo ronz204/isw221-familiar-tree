@@ -6,7 +6,7 @@ from Events.Event import Event as Ev
 from Handlers.Person.BirthPerson.NewChildrenEvent import NewChildrenEvent
 from Handlers.Person.BirthPerson.BirthPersonEvent import BirthPersonEvent
 from Handlers.Person.DeathPerson.DeathPersonEvent import DeathPersonEvent
-from Handlers.Person.RelatePerson.RelatePersonEvent import RelatePersonEvent
+from Handlers.Person.CouplePerson.CouplePersonEvent import CouplePersonEvent
 from Handlers.Person.DeathPerson.WidowedPersonEvent import WidowedPersonEvent
 from Handlers.Person.RegisterPerson.RegisterPersonEvent import RegisterPersonEvent
 from Handlers.Person.BirthdaysPerson.BirthdaysPersonEvent import BirthdaysPersonEvent
@@ -15,7 +15,7 @@ EVENTS: List[Ev] = [
   NewChildrenEvent,
   BirthPersonEvent,
   DeathPersonEvent,
-  RelatePersonEvent,
+  CouplePersonEvent,
   WidowedPersonEvent,
   RegisterPersonEvent,
   BirthdaysPersonEvent,

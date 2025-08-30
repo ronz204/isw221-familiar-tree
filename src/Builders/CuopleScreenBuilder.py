@@ -5,7 +5,7 @@ from Models.Person import Person
 from Models.Enums.Status import Status
 from typing import Callable, List, Any
 
-class RelateScreenBuilder:
+class CuopleScreenBuilder:
   def __init__(self, parent: tk.Widget):
     self.parent = parent
 

@@ -4,18 +4,18 @@ from Events.Event import Event
 from Events.Broker import Broker
 from Events.Listener import Listener
 
-from Builders.RelateScreenBuilder import RelateScreenBuilder
-from Handlers.Person.RelatePerson.RelatePersonEvent import RelatePersonEvent
-from Handlers.Person.RelatePerson.RelatePersonHandler import RelatePersonHandler
+from Builders.CuopleScreenBuilder import CuopleScreenBuilder
+from Handlers.Person.CouplePerson.CouplePersonEvent import CouplePersonEvent
+from Handlers.Person.CouplePerson.CouplePersonHandler import CouplePersonHandler
 from Handlers.Person.RegisterPerson.RegisterPersonEvent import RegisterPersonEvent
 
-class RelateScreen(tk.Frame, Listener):
+class CoupleScreen(tk.Frame, Listener):
   def __init__(self, parent: tk.Widget, broker: Broker):
     super().__init__(parent)
     self.broker = broker
 
-    self.builder = RelateScreenBuilder(self)
-    self.relate_person_handler = RelatePersonHandler(self.broker)
+    self.builder = CuopleScreenBuilder(self)
+    self.couple_person_handler = CouplePersonHandler(self.broker)
 
     self.subscribe_to_events()
     self.setup_ui_components()
@@ -35,10 +35,10 @@ class RelateScreen(tk.Frame, Listener):
     self.builder.load_data_hydration()
 
   def subscribe_to_events(self):
-    self.broker.subscribe(RelatePersonEvent.name, self)
+    self.broker.subscribe(CouplePersonEvent.name, self)
     self.broker.subscribe(RegisterPersonEvent.name, self)
 
-  def on_relate_person(self, data: Dict[str, Any]):
+  def on_couple_person(self, data: Dict[str, Any]):
     self.builder.load_data_hydration()
     self.builder.clear_form()
 
@@ -46,8 +46,8 @@ class RelateScreen(tk.Frame, Listener):
     self.builder.load_data_hydration()
 
   def handle(self, event: Event):
-    if event.name == RelatePersonEvent.name:
-      self.on_relate_person(event.data)
+    if event.name == CouplePersonEvent.name:
+      self.on_couple_person(event.data)
     elif event.name == RegisterPersonEvent.name:
       self.on_register_person(event.data)
 

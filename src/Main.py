@@ -4,7 +4,7 @@ from Scheduler import Scheduler
 from Events.Broker import Broker
 
 from Screens.PersonScreen import PersonScreen
-from Screens.RelateScreen import RelateScreen
+from Screens.CoupleScreen import CoupleScreen
 from Screens.RecentBirthsScreen import RecentBirthsScreen
 from Screens.BetweenPeopleScreen import BetweenPeopleScreen
 from Screens.DeceasedPeopleScreen import DeceasedPeopleScreen
@@ -27,7 +27,7 @@ notebook = ttk.Notebook(window)
 notebook.pack(fill="both", expand=True)
 
 notebook.add(PersonScreen(notebook, broker), text="Persona")
-notebook.add(RelateScreen(notebook, broker), text="Relaciones")
+notebook.add(CoupleScreen(notebook, broker), text="Parejas")
 
 notebook.add(BetweenPeopleScreen(notebook, broker), text="Consulta #1")
 notebook.add(RecentBirthsScreen(notebook, broker), text="Consulta #5")

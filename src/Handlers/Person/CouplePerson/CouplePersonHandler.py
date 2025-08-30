@@ -7,12 +7,12 @@ from Handlers.Handler import Handler
 from Models.Timeline import Timeline
 from Models.Enums.Status import Status
 
-from Handlers.Person.RelatePerson.RelatePersonEvent import RelatePersonEvent
-from Handlers.Person.RelatePerson.RelatePersonSchema import RelatePersonSchema
+from Handlers.Person.CouplePerson.CouplePersonEvent import CouplePersonEvent
+from Handlers.Person.CouplePerson.CouplePersonSchema import CouplePersonSchema
 
-class RelatePersonHandler(Handler[RelatePersonSchema]):
+class CouplePersonHandler(Handler[CouplePersonSchema]):
   def __init__(self, broker: Broker):
-    super().__init__(broker, RelatePersonSchema)
+    super().__init__(broker, CouplePersonSchema)
 
   def execute(self, data: Dict[str, Any]) -> None:
     validated = self.validate(data)
@@ -32,11 +32,11 @@ class RelatePersonHandler(Handler[RelatePersonSchema]):
     man.save()
     woman.save()
 
-    event = Event.get(Event.name == RelatePersonEvent.name)
+    event = Event.get(Event.name == CouplePersonEvent.name)
     Timeline.create(person_id=man.id, event_id=event.id, year=validated.year)
     Timeline.create(person_id=woman.id, event_id=event.id, year=validated.year)
 
-    self.broker.publish(RelatePersonEvent({
+    self.broker.publish(CouplePersonEvent({
       "year": validated.year,
       "man_id": man.id,
       "man_name": man.name,
