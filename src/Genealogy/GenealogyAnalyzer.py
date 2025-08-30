@@ -82,3 +82,27 @@ class GenealogyAnalyzer:
         continue
 
     return ancestors
+
+  def get_descendants(self, person: Person) -> Dict[int, int]:
+    descendants: Dict[int, int] = {}
+    visited: Set[int] = {person.id}
+
+    queue = deque([(person.id, 0)])
+
+    while queue:
+      current_id, distance = queue.popleft()
+
+      try:
+        predicate = (Person.father_id == current_id) | (Person.mother_id == current_id)
+        children = Person.select().where(predicate)
+
+        for child in children:
+          if child.id not in visited:
+            descendants[child.id] = distance + 1
+            queue.append((child.id, distance + 1))
+            visited.add(child.id)
+
+      except:
+        continue
+
+    return descendants
