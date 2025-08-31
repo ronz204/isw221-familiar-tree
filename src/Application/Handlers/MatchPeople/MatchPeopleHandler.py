@@ -24,11 +24,7 @@ class MatchPeopleHandler(Handler[MatchPeopleSchema]):
     if abs(man.age - woman.age) > 15: return
     if man.age < 18 or woman.age < 18: return
 
-    Relation.update(status=Couple.PREVIOUS.value).where(
-      ((Relation.man == man) | (Relation.woman == woman)) & (Relation.status == Couple.CURRENT.value)
-    ).execute()
-
-    Relation.create(man=man, woman=woman, timestamp=validated["timestamp"])
+    Relation.create(man=man, woman=woman, timestamp=validated.timestamp)
 
     man.status = Status.MARRIED.value
     woman.status = Status.MARRIED.value
@@ -37,8 +33,8 @@ class MatchPeopleHandler(Handler[MatchPeopleSchema]):
     woman.save()
 
     event = Event.get(Event.name == MatchedPeopleEvent.name)
-    Timeline.create(person=man, event=event, timestamp=validated["timestamp"])
-    Timeline.create(person=woman, event=event, timestamp=validated["timestamp"])
+    Timeline.create(person=man, event=event, timestamp=validated.timestamp)
+    Timeline.create(person=woman, event=event, timestamp=validated.timestamp)
 
     self.broker.publish(MatchedPeopleEvent({
       "man_id": man.id,
