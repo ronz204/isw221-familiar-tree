@@ -14,7 +14,7 @@ class PersonScreen(tk.Frame):
     self.setup_ui_components()
 
   def setup_ui_components(self):
-    self.builder.build_grid_config()
+    self.builder.setup_grid()
     self.builder.build_container()
     self.builder.build_frames()
     self.builder.build_title()

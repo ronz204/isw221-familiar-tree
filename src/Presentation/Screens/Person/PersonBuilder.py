@@ -16,7 +16,7 @@ class PersonBuilder:
   def __init__(self, parent: tk.Widget):
     self.parent: tk.Widget = parent
 
-  def build_grid_config(self):
+  def setup_grid(self):
     for index in range(3):
       self.parent.grid_rowconfigure(index, weight=1)
       self.parent.grid_columnconfigure(index, weight=1)
