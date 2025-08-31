@@ -1,12 +1,15 @@
 import tkinter as tk
-
+from Application.Events.Broker import Broker
 from Presentation.Screens.Person.PersonBuilder import PersonBuilder
+from Application.Handlers.RegisterPerson.RegisterPersonHandler import RegisterPersonHandler
 
 class PersonScreen(tk.Frame):
-  def __init__(self, parent: tk.Widget):
+  def __init__(self, parent: tk.Widget, broker: Broker):
     super().__init__(parent)
+    self.broker: Broker = broker
 
     self.builder = PersonBuilder(self)
+    self.register_person_handler = RegisterPersonHandler(broker)
 
     self.setup_ui_components()
 
@@ -30,7 +33,8 @@ class PersonScreen(tk.Frame):
 
   def register_command(self):
     data = self.builder.get_form_data()
-    print(data)
+    self.register_person_handler.handle(data)
+    self.builder.clear_form_fields()
 
   def discard_command(self):
     self.builder.clear_form_fields()
