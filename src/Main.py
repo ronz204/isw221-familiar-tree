@@ -4,6 +4,7 @@ from Application.Events.Broker import Broker
 from Presentation.Screens.Match.MatchScreen import MatchScreen
 from Presentation.Screens.Person.PersonScreen import PersonScreen
 from Presentation.Screens.Relate.RelateScreen import RelateScreen
+from Presentation.Screens.Family.FamilyScreen import FamilyScreen
 
 window = tk.Tk()
 broker = Broker()
@@ -19,5 +20,6 @@ notebook.pack(fill="both", expand=True)
 notebook.add(PersonScreen(notebook, broker), text="Registrar Personas")
 notebook.add(RelateScreen(notebook, broker), text="Relacionar Personas")
 notebook.add(MatchScreen(notebook, broker), text="Emparejar Personas")
+notebook.add(FamilyScreen(notebook, broker), text="Árbol Genealógico")
 
 window.mainloop()
