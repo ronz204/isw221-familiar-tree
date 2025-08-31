@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from typing import List
 from Domain.Models.Person import Person
 from Presentation.Components.Node import Node
 from Presentation.Components.Edge import Edge
@@ -7,7 +8,7 @@ from Presentation.Components.Edge import Edge
 class FamilyBuilder:
   def __init__(self, parent: tk.Widget, go_back_command=None):
     self.parent = parent
-    self.go_back_command = go_back_command
+    self.people: List[Person] = []
 
   def setup_grid(self):
     self.parent.grid_rowconfigure(0, weight=1)
@@ -33,4 +34,6 @@ class FamilyBuilder:
     self.h_scroll.grid(row=1, column=0, sticky="ew")
     self.canvas_frame.grid_rowconfigure(0, weight=1)
     self.canvas_frame.grid_columnconfigure(0, weight=1)
-    
+
+  def load_data_hydration(self):
+    self.people = list(Person.select())

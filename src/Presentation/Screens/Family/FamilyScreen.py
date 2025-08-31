@@ -24,9 +24,7 @@ class FamilyScreen(tk.Frame, Listener):
     self.builder.build_canvas()
     self.builder.build_scrollers()
 
+    self.builder.load_data_hydration()
+
   def listen(self, event: Event):
     self.bus.get(event.name)(event.data)
-
-  """ def load_and_draw_tree(self):
-    people = list(Person.select())
-    self.builder.draw_tree(people) """
