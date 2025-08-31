@@ -1,6 +1,6 @@
-from Models.Event import Event
-from Models.Person import Person
 from Database.Core.Peewee import db
+from Domain.Models.Event import Event
+from Domain.Models.Person import Person
 from peewee import Model, AutoField, ForeignKeyField, TimestampField
 
 class Timeline(Model):
