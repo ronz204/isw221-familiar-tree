@@ -2,14 +2,14 @@ from Domain.Models.Person import Person
 
 from Application.Events.Broker import Broker
 from Application.Handlers.Handler import Handler
-from Application.Events.Person.RelatePeopleEvent import RelatePeopleEvent
-from Application.Handlers.RelatePerson.RelatePersonSchema import RelatePersonSchema
+from Application.Events.Person.RelatedPeopleEvent import RelatedPeopleEvent
+from Application.Handlers.RelatePeople.RelatePeopleSchema import RelatePeopleSchema
 
-class RelatePersonHandler(Handler[RelatePersonSchema]):
+class RelatePeopleHandler(Handler[RelatePeopleSchema]):
   def __init__(self, broker: Broker):
-    super().__init__(broker, RelatePersonSchema)
+    super().__init__(broker, RelatePeopleSchema)
 
-  def process(self, validated: RelatePersonSchema) -> None:
+  def process(self, validated: RelatePeopleSchema) -> None:
     person = Person.get_by_id(validated.person_id)
     if not person: return
 
@@ -31,9 +31,6 @@ class RelatePersonHandler(Handler[RelatePersonSchema]):
 
     person.save()
 
-    self.broker.publish(RelatePeopleEvent({
+    self.broker.publish(RelatedPeopleEvent({
       "person_id": person.id,
-      "guard_id": person.guard.id or None,
-      "father_id": person.father.id or None,
-      "mother_id": person.mother.id or None,
     }))
