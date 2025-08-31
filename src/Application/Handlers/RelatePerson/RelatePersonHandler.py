@@ -1,8 +1,8 @@
-from Domain.Models.Event import Event
 from Domain.Models.Person import Person
 
 from Application.Events.Broker import Broker
 from Application.Handlers.Handler import Handler
+from Application.Events.Person.RelatePeopleEvent import RelatePeopleEvent
 from Application.Handlers.RelatePerson.RelatePersonSchema import RelatePersonSchema
 
 class RelatePersonHandler(Handler[RelatePersonSchema]):
@@ -30,3 +30,10 @@ class RelatePersonHandler(Handler[RelatePersonSchema]):
       person.mother = mother
 
     person.save()
+
+    self.broker.publish(RelatePeopleEvent({
+      "person_id": person.id,
+      "guard_id": person.guard.id or None,
+      "father_id": person.father.id or None,
+      "mother_id": person.mother.id or None,
+    }))
