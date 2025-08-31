@@ -6,6 +6,7 @@ from Domain.Models.Timeline import Timeline
 from Application.Events.Broker import Broker
 from Application.Handlers.Handler import Handler
 from Application.Events.Person.PersonBornEvent import PersonBornEvent
+from Application.Events.Person.RegisteredPersonEvent import RegisteredPersonEvent
 from Application.Handlers.RegisterPerson.RegisterPersonSchema import RegisterPersonSchema
 
 class RegisterPersonHandler(Handler[RegisterPersonSchema]):
@@ -24,7 +25,7 @@ class RegisterPersonHandler(Handler[RegisterPersonSchema]):
     event = Event.get(Event.name == PersonBornEvent.name)
     Timeline.create(event=event, person=person, timestamp=data["birthdate"])
 
-    self.broker.publish(PersonBornEvent({
+    self.broker.publish(RegisteredPersonEvent({
       "id": person.id,
       "name": person.name,
       "cedula": person.cedula,
