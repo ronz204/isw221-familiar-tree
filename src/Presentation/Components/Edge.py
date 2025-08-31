@@ -8,3 +8,8 @@ class Edge:
     self.end = end
 
     self.line_id = None
+
+  def draw(self):
+    self.line_id = self.canvas.create_line(
+      fill="black", width=2
+    )
