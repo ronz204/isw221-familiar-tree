@@ -5,6 +5,7 @@ from Events.Broker import Broker
 
 from Screens.PersonScreen import PersonScreen
 from Screens.CoupleScreen import CoupleScreen
+from Screens.FamilyTreeScreen import FamilyTreeScreen
 from Screens.RelatePeopleScreen import RelatePeopleScreen
 from Screens.RecentBirthsScreen import RecentBirthsScreen
 from Screens.BetweenPeopleScreen import BetweenPeopleScreen
@@ -32,6 +33,7 @@ notebook.pack(fill="both", expand=True)
 
 notebook.add(PersonScreen(notebook, broker), text="Persona")
 notebook.add(CoupleScreen(notebook, broker), text="Parejas")
+notebook.add(FamilyTreeScreen(notebook), text="Árbol")
 notebook.add(RelatePeopleScreen(notebook, broker), text="Relaciones")
 
 notebook.add(BetweenPeopleScreen(notebook, broker), text="Consulta #1")
