@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from Screens.Person.PersonBuilder import PersonBuilder
+from Presentation.Screens.Person.PersonBuilder import PersonBuilder
 
 class PersonScreen(tk.Frame):
   def __init__(self, parent: tk.Widget):

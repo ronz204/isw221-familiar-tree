@@ -1,8 +1,8 @@
 import tkinter as tk
-from Components.Field import Field
-from Components.Combo import Combo
-from Components.Button import Button
 from typing import Any, Callable, Dict
+from Presentation.Components.Combo import Combo
+from Presentation.Components.Field import Field
+from Presentation.Components.Button import Button
 
 GENDER_OPTIONS = ["M", "F"]
 

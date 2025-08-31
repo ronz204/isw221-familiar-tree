@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from Screens.Person.PersonScreen import PersonScreen
+from Presentation.Screens.Person.PersonScreen import PersonScreen
 
 window = tk.Tk()
 
