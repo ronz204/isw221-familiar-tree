@@ -28,7 +28,7 @@ class BetweenTwoPeopleScreen(tk.Frame, Listener):
     self.broker.subscribe(RegisteredPersonEvent.name, self)
 
     self.bus.add(RelativesFoundEvent.name, self.on_relatives_found_result)
-    self.bus.add(RegisteredPersonEvent.name, self.on_register_person)
+    self.bus.add(RegisteredPersonEvent.name, self.on_registered_person)
 
   def setup_ui_components(self):
     self.builder.setup_grid()
@@ -39,13 +39,13 @@ class BetweenTwoPeopleScreen(tk.Frame, Listener):
     self.builder.build_person1_field()
     self.builder.build_person2_field()
     self.builder.build_result_section()
-    
-    self.builder.build_find_button(self.on_find_relationship)
-    self.builder.build_clear_button(self.on_clear_form)
-    
+
+    self.builder.build_find_button(self.on_find_command)
+    self.builder.build_clear_button(self.on_clear_command)
+
     self.builder.load_data_hydration()
 
-  def on_find_relationship(self):
+  def on_find_command(self):
     data = self.builder.get_form_data()
     
     if not data["person1_id"] or not data["person2_id"]:
@@ -61,7 +61,7 @@ class BetweenTwoPeopleScreen(tk.Frame, Listener):
       "person2_id": data["person2_id"]
     })
 
-  def on_clear_form(self):
+  def on_clear_command(self):
     self.builder.clear_form_fields()
 
   def listen(self, event: Event):
@@ -71,5 +71,5 @@ class BetweenTwoPeopleScreen(tk.Frame, Listener):
     relationship = data.get("relation", "")
     self.builder.set_result(relationship)
 
-  def on_register_person(self, data: Dict[str, Any]):
+  def on_registered_person(self, data: Dict[str, Any]):
     self.builder.load_data_hydration()

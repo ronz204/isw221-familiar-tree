@@ -28,7 +28,7 @@ class ChildrenTogetherScreen(tk.Frame, Listener):
     self.broker.subscribe(RegisteredPersonEvent.name, self)
 
     self.bus.add(ChildrenTogetherFoundEvent.name, self.on_children_together_found)
-    self.bus.add(RegisteredPersonEvent.name, self.on_register_person)
+    self.bus.add(RegisteredPersonEvent.name, self.on_registered_person)
 
   def setup_ui_components(self):
     self.builder.setup_grid()
@@ -36,11 +36,11 @@ class ChildrenTogetherScreen(tk.Frame, Listener):
     self.builder.build_title()
     self.builder.build_frames()
 
-    self.builder.build_search_button(self.on_search_couples)
+    self.builder.build_search_button(self.on_search_command)
     self.builder.build_result_section()
     self.builder.build_info_label()
 
-  def on_search_couples(self):
+  def on_search_command(self):
     self.children_together_handler.handle({})
 
   def listen(self, event: Event):
@@ -50,5 +50,5 @@ class ChildrenTogetherScreen(tk.Frame, Listener):
     couples = data.get("couples", [])
     self.builder.display_results(couples)
 
-  def on_register_person(self, data: Dict[str, Any]):
+  def on_registered_person(self, data: Dict[str, Any]):
     self.builder.clear_results()
