@@ -1,6 +1,5 @@
 from Domain.Models.Event import Event
 from Domain.Enums.Status import Status
-from Domain.Enums.Couple import Couple
 from Domain.Models.Person import Person
 from Domain.Models.Relation import Relation
 from Domain.Models.Timeline import Timeline
