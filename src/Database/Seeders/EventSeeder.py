@@ -12,6 +12,7 @@ from Application.Events.Person.DeathedPersonEvent import DeathedPersonEvent
 from Application.Events.Person.WidowedPersonEvent import WidowedPersonEvent
 from Application.Events.Person.RelativesFoundEvent import RelativesFoundEvent
 from Application.Events.Person.RegisteredPersonEvent import RegisteredPersonEvent
+from Application.Events.Person.RecentBirthsFoundEvent import RecentBirthsFoundEvent
 from Application.Events.Person.DeathedPeopleFoundEvent import DeathedPeopleFoundEvent
 from Application.Events.Person.ChildrenTogetherFoundEvent import ChildrenTogetherFoundEvent
 from Application.Events.Person.DescendantsFoundAliveEvent import DescendantsFoundAliveEvent
@@ -29,6 +30,7 @@ class EventSeeder(Seeder):
       WidowedPersonEvent,
       RelativesFoundEvent,
       RegisteredPersonEvent,
+      RecentBirthsFoundEvent,
       DeathedPeopleFoundEvent,
       ChildrenTogetherFoundEvent,
       DescendantsFoundAliveEvent,
