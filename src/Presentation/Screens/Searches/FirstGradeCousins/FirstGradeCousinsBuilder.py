@@ -21,7 +21,7 @@ class FirstGradeCousinsBuilder:
     self.container.grid(row=1, column=1, padx=40, pady=40, sticky=tk.NSEW)
 
   def build_title(self):
-    self.title = tk.Label(self.container, text="Buscar Primos Hermanos", font=("", 16, "bold"))
+    self.title = tk.Label(self.container, text="Buscar Primos", font=("", 16, "bold"))
     self.title.grid(row=0, column=0, pady=(0, 25))
 
   def build_frames(self):
@@ -55,7 +55,7 @@ class FirstGradeCousinsBuilder:
     self.clear_button.grid(row=0, column=1, padx=(10, 0), sticky=tk.W)
 
   def build_result_section(self):
-    self.result_title = tk.Label(self.result_frame, text="Primos Hermanos:", font=("", 12, "bold"))
+    self.result_title = tk.Label(self.result_frame, text="Primos:", font=("", 12, "bold"))
     self.result_title.grid(row=0, column=0, sticky=tk.W, pady=(0, 10))
     
     self.listbox_frame = tk.Frame(self.result_frame)
@@ -100,8 +100,8 @@ class FirstGradeCousinsBuilder:
     self.result_listbox.delete(0, tk.END)
     
     if not cousins:
-      self.result_listbox.insert(tk.END, f"No se encontraron primos hermanos para {selected_person_name}")
-      self.info_label.config(text="No hay primos hermanos para mostrar", fg="orange")
+      self.result_listbox.insert(tk.END, f"No se encontraron Primos para {selected_person_name}")
+      self.info_label.config(text="No hay Primos para mostrar", fg="orange")
       return
     
     for cousin in cousins:
