@@ -5,6 +5,7 @@ from Domain.Models.Event import Event as Model
 
 from Application.Events.Person.PersonBornEvent import PersonBornEvent
 from Application.Events.Person.NewChildrenEvent import NewChildrenEvent
+from Application.Events.Person.CousinsFoundEvent import CousinsFoundEvent
 from Application.Events.Person.MatchedPeopleEvent import MatchedPeopleEvent
 from Application.Events.Person.RelatedPeopleEvent import RelatedPeopleEvent
 from Application.Events.Person.DeathedPersonEvent import DeathedPersonEvent
@@ -17,6 +18,7 @@ class EventSeeder(Seeder):
     events: List[Event] = [
       PersonBornEvent,
       NewChildrenEvent,
+      CousinsFoundEvent,
       RelatedPeopleEvent,
       MatchedPeopleEvent,
       DeathedPersonEvent,
