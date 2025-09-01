@@ -9,6 +9,7 @@ from Application.Events.Person.MatchedPeopleEvent import MatchedPeopleEvent
 from Application.Events.Person.RelatedPeopleEvent import RelatedPeopleEvent
 from Application.Events.Person.DeathedPersonEvent import DeathedPersonEvent
 from Application.Events.Person.WidowedPersonEvent import WidowedPersonEvent
+from Application.Events.Person.RelativesFoundEvent import RelativesFoundEvent
 from Application.Events.Person.RegisteredPersonEvent import RegisteredPersonEvent
 
 class EventSeeder(Seeder):
@@ -20,6 +21,7 @@ class EventSeeder(Seeder):
       MatchedPeopleEvent,
       DeathedPersonEvent,
       WidowedPersonEvent,
+      RelativesFoundEvent,
       RegisteredPersonEvent,
     ]
 
