@@ -8,6 +8,7 @@ from Presentation.Screens.Relate.RelateScreen import RelateScreen
 from Presentation.Screens.Family.FamilyScreen import FamilyScreen
 from Presentation.Screens.Timeline.TimelineScreen import TimelineScreen
 
+from Presentation.Screens.Searches.RecentBirths.RecentBirthsScreen import RecentBirthsScreen
 from Presentation.Screens.Searches.DeathedPeople.DeathedPeopleScreen import DeathedPeopleScreen
 from Presentation.Screens.Searches.ChildrenTogether.ChildrenTogetherScreen import ChildrenTogetherScreen
 from Presentation.Screens.Searches.BetweenTwoPeople.BetweenTwoPeopleScreen import BetweenTwoPeopleScreen
@@ -38,5 +39,6 @@ notebook.add(DeathedPeopleScreen(notebook, broker), text="Busqueda #3")
 notebook.add(FirstGradeCousinsScreen(notebook, broker), text="Busqueda #4")
 notebook.add(LivingDescendantsScreen(notebook, broker), text="Busqueda #5")
 notebook.add(MaternalAncestorsScreen(notebook, broker), text="Busqueda #6")
+notebook.add(RecentBirthsScreen(notebook, broker), text="Busqueda #7")
 
 window.mainloop()
