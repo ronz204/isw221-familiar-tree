@@ -1,40 +1,39 @@
 from typing import List
-from Database.Peewee import db
 from peewee import SqliteDatabase
-from Database.Seeder import Seeder
+from Database.Core.Peewee import db
+from Database.Core.Seeder import Seeder
 
-from Models.Event import Event
-from Models.Person import Person
-from Models.Timeline import Timeline
-from Models.Relation import Relation
+from Domain.Models.Event import Event
+from Domain.Models.Person import Person
+from Domain.Models.Relation import Relation
+from Domain.Models.Timeline import Timeline
 
-from Seeders.EventSeeder import EventSeeder
-
-SEEDERS: List[Seeder] = [
-  EventSeeder,
-]
+from Database.Seeders.EventSeeder import EventSeeder
 
 class Migrator:
   def __init__(self, database: SqliteDatabase):
-    self.db = database
-    self.models = [Event, Person, Timeline, Relation]
+    self.database = database
+    self.models = [Event, Person, Relation, Timeline]
 
   def migrate(self) -> None:
     try:
-      self.db.connect()
-      self.db.create_tables(self.models)
-      print("Tablas creadas correctamente (si no existían).")
+      self.database.connect()
+      self.database.create_tables(self.models)
+      print("Migration successful.")
     except Exception as e:
-      print(f"Error al crear tablas: {e}")
+      print(f"Migration failed: {e}")
     finally:
-      if not self.db.is_closed():
-        self.db.close()
-  
+      if not self.database.is_closed():
+        self.database.close()
+
   def seeding(self) -> None:
-    for seeder in SEEDERS:
+    seeders: List[Seeder] = [
+      EventSeeder,]
+    
+    for seeder in seeders:
       seeder().seed()
 
-migrator = Migrator(db)
 
+migrator = Migrator(database=db)
 migrator.migrate()
 migrator.seeding()
