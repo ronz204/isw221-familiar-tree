@@ -8,6 +8,7 @@ from Presentation.Screens.Relate.RelateScreen import RelateScreen
 from Presentation.Screens.Family.FamilyScreen import FamilyScreen
 from Presentation.Screens.Timeline.TimelineScreen import TimelineScreen
 
+from Presentation.Screens.Searches.ChildrenTogether.ChildrenTogetherScreen import ChildrenTogetherScreen
 from Presentation.Screens.Searches.BetweenTwoPeople.BetweenTwoPeopleScreen import BetweenTwoPeopleScreen
 
 window = tk.Tk()
@@ -28,5 +29,6 @@ notebook.add(FamilyScreen(notebook, broker), text="Árbol Genealógico")
 notebook.add(TimelineScreen(notebook, broker), text="Línea de Tiempo")
 
 notebook.add(BetweenTwoPeopleScreen(notebook, broker), text="Busqueda #1")
+notebook.add(ChildrenTogetherScreen(notebook, broker), text="Busqueda #2")
 
 window.mainloop()
