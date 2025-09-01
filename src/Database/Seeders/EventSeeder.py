@@ -11,6 +11,7 @@ from Application.Events.Person.RelatedPeopleEvent import RelatedPeopleEvent
 from Application.Events.Person.DeathedPersonEvent import DeathedPersonEvent
 from Application.Events.Person.WidowedPersonEvent import WidowedPersonEvent
 from Application.Events.Person.RelativesFoundEvent import RelativesFoundEvent
+from Application.Events.Person.YearsCelebratedEvent import YearsCelebratedEvent
 from Application.Events.Person.RegisteredPersonEvent import RegisteredPersonEvent
 from Application.Events.Person.DisplayedTimelineEvent import DisplayedTimelineEvent
 from Application.Events.Person.RecentBirthsFoundEvent import RecentBirthsFoundEvent
@@ -30,6 +31,7 @@ class EventSeeder(Seeder):
       DeathedPersonEvent,
       WidowedPersonEvent,
       RelativesFoundEvent,
+      YearsCelebratedEvent,
       RegisteredPersonEvent,
       DisplayedTimelineEvent,
       RecentBirthsFoundEvent,
