@@ -25,6 +25,11 @@ class RegisterPersonHandler(Handler[RegisterPersonSchema]):
     event = Event.get(Event.name == PersonBornEvent.name)
     Timeline.create(event=event, person=person, timestamp=data["birthdate"])
 
+    self.broker.publish(PersonBornEvent({
+      "id": person.id,
+      "name": person.name,
+    }))
+
     self.broker.publish(RegisteredPersonEvent({
       "id": person.id,
       "name": person.name,

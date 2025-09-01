@@ -2,6 +2,7 @@ from Domain.Enums.Status import Status
 from Domain.Models.Person import Person
 from Application.Events.Broker import Broker
 from Application.Triggers.Trigger import Trigger
+from Application.Events.Person.YearsCelebratedEvent import YearsCelebratedEvent
 
 class BirthdayTrigger(Trigger):
   def __init__(self, broker: Broker):
@@ -20,3 +21,5 @@ class BirthdayTrigger(Trigger):
         if person.emotional == 0: return
         person.emotional -= 2
       person.save()
+
+    self.broker.publish(YearsCelebratedEvent({}))
