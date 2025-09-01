@@ -4,21 +4,21 @@ from Domain.Models.Person import Person
 
 class GenealogyClimber:
   def get_ancestors(self, person: Person) -> Dict[int, int]:
-    return self.bfs(start=person.id, neighbors=self.get_parents)
+    return self.bfs(start=person.id, neighbors_func=self.get_parents)
 
   def get_descendants(self, person: Person) -> Dict[int, int]:
-    return self.bfs(start=person.id, neighbors=self.get_children)
+    return self.bfs(start=person.id, neighbors_func=self.get_children)
 
-  def bfs(self, start: int, neighbors: Callable[[int], Set[int]]) -> Dict[int, int]:
+  def bfs(self, start: int, neighbors_func: Callable[[int], Set[int]]) -> Dict[int, int]:
     result: Dict[int, int] = {}
     visited: Set[int] = {start}
     queue = deque([(start, 0)])
 
     while queue:
       current, distance = queue.popleft()
-      neighbors = neighbors(current)
+      neighbor_ids = neighbors_func(current)
 
-      for neighbor in neighbors:
+      for neighbor in neighbor_ids:
         if neighbor and neighbor not in visited:
 
           result[neighbor] = distance + 1
