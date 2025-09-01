@@ -47,8 +47,6 @@ class DisplayTimelineHandler(Handler[DisplayTimelineSchema]):
       "timeline": timeline_events
     }
 
-    print(data["timeline"])
-
     self.broker.publish(DisplayedTimelineEvent({
       "person_id": validated.person_id,
       "data": data
