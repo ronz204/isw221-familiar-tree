@@ -2,6 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from Application.Events.Broker import Broker
 
+from Application.Triggers.BirthTrigger import BirthTrigger
+from Application.Triggers.DeathTrigger import DeathTrigger
+from Application.Triggers.BirthdayTrigger import BirthdayTrigger
+from Application.Service.SchedulerService import SchedulerService
+
 from Presentation.Screens.Match.MatchScreen import MatchScreen
 from Presentation.Screens.Person.PersonScreen import PersonScreen
 from Presentation.Screens.Relate.RelateScreen import RelateScreen
@@ -18,6 +23,8 @@ from Presentation.Screens.Searches.FirstGradeCousins.FirstGradeCousinsScreen imp
 
 window = tk.Tk()
 broker = Broker()
+
+scheduler = SchedulerService()
 
 window.geometry("1200x600")
 window.title("Familiar Tree")
@@ -41,4 +48,13 @@ notebook.add(LivingDescendantsScreen(notebook, broker), text="Busqueda #5")
 notebook.add(MaternalAncestorsScreen(notebook, broker), text="Busqueda #6")
 notebook.add(RecentBirthsScreen(notebook, broker), text="Busqueda #7")
 
+""" scheduler.start(BirthTrigger(broker), "birth", 5) """
+""" scheduler.start(DeathTrigger(broker), "death", 30) """
+""" scheduler.start(BirthdayTrigger(broker), "birthday", 5) """
+
+def on_closing():
+  scheduler.stop_all()
+  window.destroy()
+
+window.protocol("WM_DELETE_WINDOW", on_closing)
 window.mainloop()

@@ -54,9 +54,20 @@ class FamilyBuilder:
   def load_data_hydration(self):
     self.people = list(Person.select())
 
-  def build_family_tree(self):
-    if not self.people: return
+  def clear_family_tree(self):
+    if self.canvas:
+      self.canvas.delete("all")
+    
+    self.edges.clear()
+    self.nodes.clear()
 
+  def build_family_tree(self):
+    if not self.people: 
+      self.clear_family_tree()
+      return
+
+    self.clear_family_tree()
+    
     self.create_nodes()
     self.calculate_positions()
     self.draw_nodes()
