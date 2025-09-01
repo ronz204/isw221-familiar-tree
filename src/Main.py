@@ -11,6 +11,7 @@ from Presentation.Screens.Timeline.TimelineScreen import TimelineScreen
 from Presentation.Screens.Searches.DeathedPeople.DeathedPeopleScreen import DeathedPeopleScreen
 from Presentation.Screens.Searches.ChildrenTogether.ChildrenTogetherScreen import ChildrenTogetherScreen
 from Presentation.Screens.Searches.BetweenTwoPeople.BetweenTwoPeopleScreen import BetweenTwoPeopleScreen
+from Presentation.Screens.Searches.LivingDescendants.LivingDescendantsScreen import LivingDescendantsScreen
 from Presentation.Screens.Searches.FirstGradeCousins.FirstGradeCousinsScreen import FirstGradeCousinsScreen
 
 window = tk.Tk()
@@ -34,5 +35,6 @@ notebook.add(BetweenTwoPeopleScreen(notebook, broker), text="Busqueda #1")
 notebook.add(ChildrenTogetherScreen(notebook, broker), text="Busqueda #2")
 notebook.add(DeathedPeopleScreen(notebook, broker), text="Busqueda #3")
 notebook.add(FirstGradeCousinsScreen(notebook, broker), text="Busqueda #4")
+notebook.add(LivingDescendantsScreen(notebook, broker), text="Busqueda #5")
 
 window.mainloop()
