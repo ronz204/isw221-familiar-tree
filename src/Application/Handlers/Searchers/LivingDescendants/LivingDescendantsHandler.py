@@ -29,8 +29,6 @@ class LivingDescendantsHandler(Handler[LivingDescendantsSchema]):
           "name": descendant.name,
         })
 
-    print(living_descendants)
-
     self.broker.publish(DescendantsFoundAliveEvent({
       "person_id": person.id,
       "descendants": living_descendants,
