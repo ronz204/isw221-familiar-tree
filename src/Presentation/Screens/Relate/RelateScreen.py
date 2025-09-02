@@ -8,6 +8,7 @@ from Application.Events.Listener import Listener
 from Presentation.Screens.Relate.RelateBuilder import RelateBuilder
 from Application.Handlers.RelatePeople.RelatePeopleHandler import RelatePeopleHandler
 
+from Application.Events.Person.PersonBornEvent import PersonBornEvent
 from Application.Events.Person.RelatedPeopleEvent import RelatedPeopleEvent
 from Application.Events.Person.RegisteredPersonEvent import RegisteredPersonEvent
 
@@ -24,9 +25,11 @@ class RelateScreen(tk.Frame, Listener):
     self.subscribe_to_events()
 
   def subscribe_to_events(self):
+    self.broker.subscribe(PersonBornEvent.name, self)
     self.broker.subscribe(RelatedPeopleEvent.name, self)
     self.broker.subscribe(RegisteredPersonEvent.name, self)
 
+    self.bus.add(PersonBornEvent.name, self.on_person_born)
     self.bus.add(RelatedPeopleEvent.name, self.on_related_people)
     self.bus.add(RegisteredPersonEvent.name, self.on_registered_person)
 
@@ -58,6 +61,9 @@ class RelateScreen(tk.Frame, Listener):
 
   def on_related_people(self, data: Dict[str, Any]):
     self.builder.clear_form_fields()
+  
+  def on_person_born(self, data: Dict[str, Any]):
+    self.builder.load_data_hydration()
 
   def on_registered_person(self, data: Dict[str, Any]):
     self.builder.load_data_hydration()

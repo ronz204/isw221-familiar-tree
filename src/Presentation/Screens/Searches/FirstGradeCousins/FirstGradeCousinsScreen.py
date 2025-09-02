@@ -8,6 +8,7 @@ from Application.Events.Listener import Listener
 from Presentation.Screens.Searches.FirstGradeCousins.FirstGradeCousinsBuilder import FirstGradeCousinsBuilder
 from Application.Handlers.Searchers.FirstGradeCousins.FirstGradeCousinsHandler import FirstGradeCousinsHandler
 
+from Application.Events.Person.PersonBornEvent import PersonBornEvent
 from Application.Events.Person.CousinsFoundEvent import CousinsFoundEvent
 from Application.Events.Person.RegisteredPersonEvent import RegisteredPersonEvent
 
@@ -24,9 +25,11 @@ class FirstGradeCousinsScreen(tk.Frame, Listener):
     self.subscribe_to_events()
 
   def subscribe_to_events(self):
+    self.broker.subscribe(PersonBornEvent.name, self)
     self.broker.subscribe(CousinsFoundEvent.name, self)
     self.broker.subscribe(RegisteredPersonEvent.name, self)
 
+    self.bus.add(PersonBornEvent.name, self.on_person_born)
     self.bus.add(CousinsFoundEvent.name, self.on_cousins_found)
     self.bus.add(RegisteredPersonEvent.name, self.on_registered_person)
 
@@ -79,3 +82,6 @@ class FirstGradeCousinsScreen(tk.Frame, Listener):
   def on_registered_person(self, data: Dict[str, Any]):
     self.builder.load_data_hydration()
     self.builder.clear_results()
+
+  def on_person_born(self, data: Dict[str, Any]):
+    self.builder.load_data_hydration()

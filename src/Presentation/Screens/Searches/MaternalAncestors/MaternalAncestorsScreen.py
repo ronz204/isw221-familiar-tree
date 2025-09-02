@@ -8,6 +8,7 @@ from Application.Events.Listener import Listener
 from Presentation.Screens.Searches.MaternalAncestors.MaternalAncestorsBuilder import MaternalAncestorsBuilder
 from Application.Handlers.Searchers.MaternalAncestors.MaternalAncestorsHandler import MaternalAncestorsHandler
 
+from Application.Events.Person.PersonBornEvent import PersonBornEvent
 from Application.Events.Person.MaternalAncestorsFoundEvent import MaternalAncestorsFoundEvent
 from Application.Events.Person.RegisteredPersonEvent import RegisteredPersonEvent
 
@@ -24,9 +25,11 @@ class MaternalAncestorsScreen(tk.Frame, Listener):
     self.subscribe_to_events()
 
   def subscribe_to_events(self):
+    self.broker.subscribe(PersonBornEvent.name, self)
     self.broker.subscribe(MaternalAncestorsFoundEvent.name, self)
     self.broker.subscribe(RegisteredPersonEvent.name, self)
 
+    self.bus.add(PersonBornEvent.name, self.on_person_born)
     self.bus.add(MaternalAncestorsFoundEvent.name, self.on_ancestors_found)
     self.bus.add(RegisteredPersonEvent.name, self.on_registered_person)
 
@@ -79,3 +82,6 @@ class MaternalAncestorsScreen(tk.Frame, Listener):
   def on_registered_person(self, data: Dict[str, Any]):
     self.builder.load_data_hydration()
     self.builder.clear_results()
+
+  def on_person_born(self, data: Dict[str, Any]):
+    self.builder.load_data_hydration()

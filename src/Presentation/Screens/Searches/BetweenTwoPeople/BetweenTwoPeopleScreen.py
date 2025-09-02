@@ -8,6 +8,7 @@ from Application.Events.Listener import Listener
 from Presentation.Screens.Searches.BetweenTwoPeople.BetweenTwoPeopleBuilder import BetweenTwoPeopleBuilder
 from Application.Handlers.Searchers.BetweenTwoPeople.BetweenTwoPeopleHandler import BetweenTwoPeopleHandler
 
+from Application.Events.Person.PersonBornEvent import PersonBornEvent
 from Application.Events.Person.RelativesFoundEvent import RelativesFoundEvent
 from Application.Events.Person.RegisteredPersonEvent import RegisteredPersonEvent
 
@@ -24,9 +25,11 @@ class BetweenTwoPeopleScreen(tk.Frame, Listener):
     self.subscribe_to_events()
 
   def subscribe_to_events(self):
+    self.broker.subscribe(PersonBornEvent.name, self)
     self.broker.subscribe(RelativesFoundEvent.name, self)
     self.broker.subscribe(RegisteredPersonEvent.name, self)
 
+    self.bus.add(PersonBornEvent.name, self.on_person_born)
     self.bus.add(RelativesFoundEvent.name, self.on_relatives_found_result)
     self.bus.add(RegisteredPersonEvent.name, self.on_registered_person)
 
@@ -72,4 +75,7 @@ class BetweenTwoPeopleScreen(tk.Frame, Listener):
     self.builder.set_result(relationship)
 
   def on_registered_person(self, data: Dict[str, Any]):
+    self.builder.load_data_hydration()
+
+  def on_person_born(self, data: Dict[str, Any]):
     self.builder.load_data_hydration()
