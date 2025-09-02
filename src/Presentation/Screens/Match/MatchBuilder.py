@@ -65,15 +65,14 @@ class MatchBuilder:
 
   def load_data_hydration(self):
     emotional_predicate = Person.emotional >= 70
-    deathdate_predicate = Person.deathdate.is_null()
-    status_predicate = ((Person.status == Status.SINGLE.value) | (Person.status == Status.WIDOWED.value))
+    status_predicate = ((Person.status == Status.SINGLE.value) | (Person.status == Status.WIDOWED.value) | (Person.status == Status.DEATHED.value))
 
     self.men: List[Person] = list(Person.select().where(
-      (Person.gender == "M") & emotional_predicate & deathdate_predicate & status_predicate
+      (Person.gender == "M") & emotional_predicate & status_predicate
     ))
 
     self.women: List[Person] = list(Person.select().where(
-      (Person.gender == "F") & emotional_predicate & deathdate_predicate & status_predicate
+      (Person.gender == "F") & emotional_predicate & status_predicate
     ))
 
     men_names = [""] + [man.name for man in self.men]
