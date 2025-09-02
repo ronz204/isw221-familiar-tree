@@ -25,8 +25,11 @@ class MatchPeopleHandler(Handler[MatchPeopleSchema]):
 
     Relation.create(man=man, woman=woman, timestamp=validated.timestamp)
 
-    man.status = Status.MARRIED.value
-    woman.status = Status.MARRIED.value
+    if man.status != Status.DEATHED.value:
+      man.status = Status.MARRIED.value
+    
+    if woman.status != Status.DEATHED.value:
+      woman.status = Status.MARRIED.value
 
     man.save()
     woman.save()
