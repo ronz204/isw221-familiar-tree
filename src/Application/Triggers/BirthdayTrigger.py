@@ -19,7 +19,7 @@ class BirthdayTrigger(Trigger):
 
       if predicate1 or predicate2:
         if person.emotional == 0: return
-        person.emotional -= 2
+        person.emotional -= 3
       person.save()
 
     self.broker.publish(YearsCelebratedEvent({}))
