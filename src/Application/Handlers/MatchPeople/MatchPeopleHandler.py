@@ -2,8 +2,8 @@ import random
 from Domain.Models.Event import Event
 from Domain.Enums.Status import Status
 from Domain.Models.Person import Person
-from Domain.Models.Relation import Relation
 from Domain.Models.Discard import Discard
+from Domain.Models.Relation import Relation
 from Domain.Models.Timeline import Timeline
 from Domain.Genealogy.GenealogyTypes import GenealogyTypes
 from Domain.Genealogy.GenealogyAnalyzer import GenealogyAnalyzer
@@ -89,7 +89,7 @@ class MatchPeopleHandler(Handler[MatchPeopleSchema]):
     if not man_is_widowed and not woman_is_widowed: return True
     
     roulette_result = random.randint(1, 100)
-    success = roulette_result <= 30
+    success = roulette_result <= 20
 
     if not success:
       Discard.create(man=man, woman=woman)
