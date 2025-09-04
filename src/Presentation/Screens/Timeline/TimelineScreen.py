@@ -29,21 +29,13 @@ class TimelineScreen(tk.Frame, Listener):
     self.subscribe_to_events()
 
   def subscribe_to_events(self):
-    self.broker.subscribe(DisplayedTimelineEvent.name, self)
-    self.broker.subscribe(RegisteredPersonEvent.name, self)
     self.broker.subscribe(PersonBornEvent.name, self)
-    self.broker.subscribe(DeathedPersonEvent.name, self)
-    self.broker.subscribe(WidowedPersonEvent.name, self)
-    self.broker.subscribe(RelatedPeopleEvent.name, self)
     self.broker.subscribe(NewChildrenEvent.name, self)
+    self.broker.subscribe(DisplayedTimelineEvent.name, self)
 
-    self.bus.add(DisplayedTimelineEvent.name, self.on_displayed_timeline)
-    self.bus.add(RegisteredPersonEvent.name, self.on_person_data_changed)
     self.bus.add(PersonBornEvent.name, self.on_person_data_changed)
-    self.bus.add(DeathedPersonEvent.name, self.on_person_data_changed)
-    self.bus.add(WidowedPersonEvent.name, self.on_person_data_changed)
-    self.bus.add(RelatedPeopleEvent.name, self.on_person_data_changed)
     self.bus.add(NewChildrenEvent.name, self.on_person_data_changed)
+    self.bus.add(DisplayedTimelineEvent.name, self.on_displayed_timeline)
 
   def setup_ui_components(self):
     self.builder.setup_grid()
