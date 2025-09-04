@@ -3,6 +3,7 @@ from Domain.Enums.Status import Status
 from Domain.Models.Person import Person
 from Domain.Models.Relation import Relation
 from Domain.Models.Timeline import Timeline
+from Domain.Models.Passions import Passions
 
 from Application.Events.Broker import Broker
 from Application.Handlers.Handler import Handler
@@ -22,6 +23,7 @@ class MatchPeopleHandler(Handler[MatchPeopleSchema]):
 
     if abs(man.age - woman.age) > 15: return
     if man.age < 18 or woman.age < 18: return
+    if not self.are_compatible(man, woman): return
 
     Relation.create(man=man, woman=woman, timestamp=validated.timestamp)
 
@@ -42,3 +44,19 @@ class MatchPeopleHandler(Handler[MatchPeopleSchema]):
       "man_id": man.id,
       "woman_id": woman.id,
     }))
+
+  def are_compatible(self, man: Person, woman: Person) -> bool:
+    man_passions = set(p.affinity.id for p in man.passions)
+    woman_passions = set(p.affinity.id for p in woman.passions)
+    
+    passion_diff = abs(len(man_passions) - len(woman_passions))
+    if passion_diff > 1: return False
+    
+    min_passions = min(len(man_passions), len(woman_passions))
+    if min_passions == 0: return False
+
+    common_passions = man_passions.intersection(woman_passions)
+    compatibility_percentage = (len(common_passions) / min_passions) * 100
+    
+    if compatibility_percentage >= 70: return True
+    return False
