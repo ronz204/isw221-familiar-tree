@@ -73,12 +73,6 @@ class PersonBuilder:
     self.deathdate_field.label.grid(row=5, column=0, sticky=tk.W, pady=(0, 5))
     self.deathdate_field.entry.grid(row=5, column=1, sticky=tk.EW, pady=(0, 12))
 
-  def build_emotional_field(self):
-    self.emotional_field = Field(self.form_frame, "Estado Emocional")
-    self.emotional_field.label.grid(row=6, column=0, sticky=tk.W, pady=(0, 5))
-    self.emotional_field.entry.grid(row=6, column=1, sticky=tk.EW, pady=(0, 12))
-    self.emotional_field.entry.insert(0, "100")
-
   def build_gender_field(self):
     self.gender_combo = Combo(self.form_frame, "Género", GENDER_OPTIONS)
     self.gender_combo.label.grid(row=7, column=0, sticky=tk.W, pady=(0, 5))
@@ -131,7 +125,6 @@ class PersonBuilder:
       "age": int(self.age_field.entry.get() or 0),
       "birthdate": self.birthdate_field.entry.get(),
       "deathdate": self.deathdate_field.entry.get() or None,
-      "emotional": int(self.emotional_field.entry.get() or 100),
       "gender": self.gender_combo.combobox.get(),
       "province": self.province_combo.combobox.get(),
       "affinities": selected_affinity_ids,
@@ -143,8 +136,6 @@ class PersonBuilder:
     self.cedula_field.entry.delete(0, tk.END)
     self.birthdate_field.entry.delete(0, tk.END)
     self.deathdate_field.entry.delete(0, tk.END)
-    self.emotional_field.entry.delete(0, tk.END)
-    self.emotional_field.entry.insert(0, "100")
     self.gender_combo.combobox.set("")
     self.province_combo.combobox.set("")
     
