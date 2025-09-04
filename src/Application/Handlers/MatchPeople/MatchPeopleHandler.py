@@ -1,7 +1,9 @@
+import random
 from Domain.Models.Event import Event
 from Domain.Enums.Status import Status
 from Domain.Models.Person import Person
 from Domain.Models.Relation import Relation
+from Domain.Models.Discard import Discard
 from Domain.Models.Timeline import Timeline
 from Domain.Genealogy.GenealogyTypes import GenealogyTypes
 from Domain.Genealogy.GenealogyAnalyzer import GenealogyAnalyzer
@@ -25,10 +27,14 @@ class MatchPeopleHandler(Handler[MatchPeopleSchema]):
 
     if abs(man.age - woman.age) > 15: return
     if man.age < 18 or woman.age < 18: return
+
     if abs(man.emotional - woman.emotional) >= 20: return
+    if self.are_discarded(man, woman): return
 
     if not self.are_compatible(man, woman): return
     if self.has_family_relationship(man, woman): return
+
+    if not self.widowhood_roulette(man, woman): return
 
     Relation.create(man=man, woman=woman, timestamp=validated.timestamp)
 
@@ -70,3 +76,21 @@ class MatchPeopleHandler(Handler[MatchPeopleSchema]):
     genealogy_report = self.genealogy_analyzer.analyze(man, woman)
     if genealogy_report.relationship == GenealogyTypes.NO_RELATION: return False
     return True
+
+  def are_discarded(self, man: Person, woman: Person) -> bool:
+    return Discard.select().where(
+      ((Discard.man == man.id) & (Discard.woman == woman.id)) |
+      ((Discard.man == woman.id) & (Discard.woman == man.id))
+    ).exists()
+
+  def widowhood_roulette(self, man: Person, woman: Person) -> bool:
+    man_is_widowed = man.status == Status.WIDOWED.value
+    woman_is_widowed = woman.status == Status.WIDOWED.value
+    if not man_is_widowed and not woman_is_widowed: return True
+    
+    roulette_result = random.randint(1, 100)
+    success = roulette_result <= 30
+
+    if not success:
+      Discard.create(man=man, woman=woman)
+    return success
