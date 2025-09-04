@@ -14,7 +14,7 @@ class DeathTrigger(Trigger):
     super().__init__(broker)
 
   def trigger(self):
-    people = Person.select().where(Person.deathdate.is_null())
+    people = Person.select().where(Person.deathdate.is_null() & (Person.emotional <= 70))
     person = random.choice(people)
 
     person.deathdate = datetime.datetime.now()
