@@ -5,6 +5,7 @@ from Database.Core.Seeder import Seeder
 
 from Domain.Models.Event import Event
 from Domain.Models.Person import Person
+from Domain.Models.Discard import Discard
 from Domain.Models.Affinity import Affinity
 from Domain.Models.Passions import Passions
 from Domain.Models.Relation import Relation
@@ -16,7 +17,7 @@ from Database.Seeders.AffinitySeeder import AffinitySeeder
 class Migrator:
   def __init__(self, database: SqliteDatabase):
     self.database = database
-    self.models = [Event, Person, Relation, Timeline, Affinity, Passions]
+    self.models = [Event, Person, Discard, Relation, Timeline, Affinity, Passions]
 
   def migrate(self) -> None:
     try:
