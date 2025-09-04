@@ -25,7 +25,8 @@ class MatchPeopleHandler(Handler[MatchPeopleSchema]):
 
     if abs(man.age - woman.age) > 15: return
     if man.age < 18 or woman.age < 18: return
-    
+    if abs(man.emotional - woman.emotional) >= 20: return
+
     if not self.are_compatible(man, woman): return
     if self.has_family_relationship(man, woman): return
 

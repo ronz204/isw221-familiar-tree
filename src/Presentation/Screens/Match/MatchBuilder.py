@@ -64,16 +64,14 @@ class MatchBuilder:
     self.discard_button.grid(row=0, column=1, pady=(10, 0))
 
   def load_data_hydration(self):
-    emotional_predicate = Person.emotional >= 70
-    deathed_predicate = Person.deathdate.is_null()
-    status_predicate = ((Person.status == Status.SINGLE.value) | (Person.status == Status.WIDOWED.value))
+    predicate = ((Person.status == Status.SINGLE.value) | (Person.status == Status.WIDOWED.value))
 
     self.men: List[Person] = list(Person.select().where(
-      (Person.gender == "M") & emotional_predicate & deathed_predicate & status_predicate
+      (Person.gender == "M") & predicate
     ))
 
     self.women: List[Person] = list(Person.select().where(
-      (Person.gender == "F") & emotional_predicate & deathed_predicate & status_predicate
+      (Person.gender == "F") & predicate
     ))
 
     men_names = [""] + [man.name for man in self.men]
