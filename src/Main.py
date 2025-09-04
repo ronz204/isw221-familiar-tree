@@ -48,9 +48,11 @@ notebook.add(LivingDescendantsScreen(notebook, broker), text="Busqueda #5")
 notebook.add(MaternalAncestorsScreen(notebook, broker), text="Busqueda #6")
 notebook.add(RecentBirthsScreen(notebook, broker), text="Busqueda #7")
 
-""" scheduler.start(BirthTrigger(broker), "birth", 10)
-scheduler.start(DeathTrigger(broker), "death", 20)
-scheduler.start(BirthdayTrigger(broker), "birthday", 5) """
+""" scheduler.start(DeathTrigger(broker), "death", 5) """
+
+""" scheduler.start(BirthTrigger(broker), "birth", 10) """
+
+""" scheduler.start(BirthdayTrigger(broker), "birthday", 5) """
 
 def on_closing():
   scheduler.stop_all()

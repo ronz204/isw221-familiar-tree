@@ -17,9 +17,14 @@ class Edge:
     
     start_point, end_point, color, width = self.get_line_config(start_points, end_points)
 
-    self.line_id = self.canvas.create_line(
-      *start_point, *end_point,
-      fill=color, width=width)
+    if self.type == "guardian":
+      self.line_id = self.canvas.create_line(
+        *start_point, *end_point,
+        fill=color, width=width, dash=(5, 3))
+    else:
+      self.line_id = self.canvas.create_line(
+        *start_point, *end_point,
+        fill=color, width=width)
 
   def update_position(self):
     if self.line_id:
@@ -31,6 +36,10 @@ class Edge:
       direction = "right" if self.start.x < self.end.x else "left"
       opposite = "left" if direction == "right" else "right"
       return start_points[direction], end_points[opposite], "red", 3
+    elif self.type == "guardian":
+      direction = "bottom" if self.start.y < self.end.y else "top"
+      opposite = "top" if direction == "bottom" else "bottom"
+      return start_points[direction], end_points[opposite], "green", 2
     else:
       direction = "bottom" if self.start.y < self.end.y else "top"
       opposite = "top" if direction == "bottom" else "bottom"

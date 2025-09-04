@@ -50,6 +50,7 @@ class FamilyBuilder:
     tk.Label(legend_frame, text="Fallecidos", fg="gray").pack(side=tk.LEFT, padx=5)
     tk.Label(legend_frame, text="— Pareja (rojo)", fg="red").pack(side=tk.LEFT, padx=5)
     tk.Label(legend_frame, text="— Padre/Hijo (azul)", fg="blue").pack(side=tk.LEFT, padx=5)
+    tk.Label(legend_frame, text="--- Tutor Legal (verde)", fg="green").pack(side=tk.LEFT, padx=5)
 
   def load_data_hydration(self):
     self.people = list(Person.select())
@@ -137,6 +138,12 @@ class FamilyBuilder:
       if person.mother and person.mother.id in self.nodes:
         self.edges.append(Edge(self.canvas, self.nodes[person.mother.id], 
                               self.nodes[person.id], "child"))
+
+    # Guardian Relationships
+    for person in self.people:
+      if person.guard and person.guard.id in self.nodes:
+        self.edges.append(Edge(self.canvas, self.nodes[person.guard.id], 
+                              self.nodes[person.id], "guardian"))
 
     # Spousal Relationships
     relations = list(Relation.select().where(Relation.status == "C"))
