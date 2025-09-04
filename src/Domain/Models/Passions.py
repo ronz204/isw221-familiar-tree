@@ -5,7 +5,7 @@ from peewee import Model, AutoField, ForeignKeyField
 
 class Passions(Model):
   id = AutoField(primary_key=True)
-  user = ForeignKeyField(Person, backref="passions")
+  person = ForeignKeyField(Person, backref="passions")
   affinity = ForeignKeyField(Affinity, backref="passions")
 
   class Meta:
