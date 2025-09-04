@@ -3,6 +3,7 @@ from typing import Any, Callable, Dict
 from Presentation.Components.Combo import Combo
 from Presentation.Components.Field import Field
 from Presentation.Components.Button import Button
+from Domain.Models.Affinity import Affinity
 
 GENDER_OPTIONS = ["M", "F"]
 
@@ -15,6 +16,9 @@ PROVINCE_OPTIONS = [
 class PersonBuilder:
   def __init__(self, parent: tk.Widget):
     self.parent: tk.Widget = parent
+    
+    self.affinity_vars = {}
+    self.affinity_objects = []
 
   def setup_grid(self):
     for index in range(3):
@@ -33,10 +37,12 @@ class PersonBuilder:
     self.form_frame.grid(row=1, column=0, columnspan=3, sticky=tk.EW, pady=(0, 20))
     self.form_frame.grid_columnconfigure(0, weight=1)
     self.form_frame.grid_columnconfigure(1, weight=1)
+    self.form_frame.grid_columnconfigure(2, weight=1)
     
     self.buttons_frame = tk.Frame(self.container)
     self.buttons_frame.grid(row=2, column=0, columnspan=3, sticky=tk.EW)
     self.buttons_frame.grid_columnconfigure(0, weight=1)
+    self.buttons_frame.grid_columnconfigure(1, weight=1)
 
   def build_title(self):
     self.title = tk.Label(self.container, text="Registrar una Nueva Persona", font=("", 16, "bold"))
@@ -83,15 +89,42 @@ class PersonBuilder:
     self.province_combo.label.grid(row=8, column=0, sticky=tk.W, pady=(0, 5))
     self.province_combo.combobox.grid(row=8, column=1, sticky=tk.EW, pady=(0, 12))
 
+  def load_data_hydration(self):
+    self.affinity_objects = Affinity.select()
+
+  def build_affinity_checks(self):
+    if not self.affinity_objects: return
+    
+    affinity_label = tk.Label(self.form_frame, text="Afinidades")
+    affinity_label.grid(row=1, column=2, sticky=tk.W + tk.N, pady=(0, 5), padx=(20, 0))
+    
+    self.affinity_frame = tk.Frame(self.form_frame)
+    self.affinity_frame.grid(row=2, column=2, rowspan=7, sticky=tk.NW, pady=(0, 12), padx=(20, 0))
+    
+    for i, affinity in enumerate(self.affinity_objects):
+      var = tk.BooleanVar()
+      checkbox = tk.Checkbutton(
+        self.affinity_frame, 
+        text=affinity.name, 
+        variable=var
+      )
+      checkbox.grid(row=i, column=0, sticky=tk.W, pady=2)
+      self.affinity_vars[affinity.id] = var
+
   def build_register_button(self, command: Callable):
     self.register_button = Button(self.buttons_frame, "Registrar", command=command)
-    self.register_button.grid(row=0, column=0, pady=(10, 0))
+    self.register_button.grid(row=0, column=0, pady=(10, 0), padx=(0, 10))
 
   def build_discard_button(self, command: Callable):
     self.discard_button = Button(self.buttons_frame, "Descartar", command=command)
-    self.discard_button.grid(row=0, column=1, pady=(10, 0))
+    self.discard_button.grid(row=0, column=1, pady=(10, 0), padx=(10, 0))
 
   def get_form_data(self) -> Dict[str, Any]:
+    selected_affinity_ids = [
+      affinity_id for affinity_id, var in self.affinity_vars.items() 
+      if var.get()
+    ]
+    
     return {
       "name": self.name_field.entry.get(),
       "cedula": self.cedula_field.entry.get(),
@@ -101,6 +134,7 @@ class PersonBuilder:
       "emotional": int(self.emotional_field.entry.get() or 100),
       "gender": self.gender_combo.combobox.get(),
       "province": self.province_combo.combobox.get(),
+      "affinities": selected_affinity_ids,
     }
   
   def clear_form_fields(self):
@@ -113,3 +147,6 @@ class PersonBuilder:
     self.emotional_field.entry.insert(0, "100")
     self.gender_combo.combobox.set("")
     self.province_combo.combobox.set("")
+    
+    for var in self.affinity_vars.values():
+      var.set(False)

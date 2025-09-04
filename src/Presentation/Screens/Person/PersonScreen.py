@@ -19,6 +19,8 @@ class PersonScreen(tk.Frame):
     self.builder.build_frames()
     self.builder.build_title()
 
+    self.builder.load_data_hydration()
+
     self.builder.build_age_field()
     self.builder.build_name_field()
     self.builder.build_cedula_field()
@@ -27,6 +29,7 @@ class PersonScreen(tk.Frame):
     self.builder.build_emotional_field()
     self.builder.build_gender_field()
     self.builder.build_province_field()
+    self.builder.build_affinity_checks()
 
     self.builder.build_register_button(self.register_command)
     self.builder.build_discard_button(self.discard_command)

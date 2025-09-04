@@ -1,7 +1,9 @@
 from Domain.Models.Event import Event
 from Domain.Enums.Status import Status
 from Domain.Models.Person import Person
+from Domain.Models.Passions import Passions
 from Domain.Models.Timeline import Timeline
+from Domain.Models.Affinity import Affinity
 
 from Application.Events.Broker import Broker
 from Application.Handlers.Handler import Handler
@@ -15,12 +17,17 @@ class RegisterPersonHandler(Handler[RegisterPersonSchema]):
 
   def process(self, validated: RegisterPersonSchema) -> None:
     data = validated.model_dump()
+    affinity_ids = data.pop("affinities", [])
 
     if data.get("deathdate"):
       data["status"] = Status.DEATHED.value
     
     person, created = Person.get_or_create(**data)
     if not created: return
+
+    for affinity_id in affinity_ids:
+      affinity = Affinity.get_by_id(affinity_id)
+      Passions.create(person=person, affinity=affinity)
 
     event = Event.get(Event.name == PersonBornEvent.name)
     Timeline.create(event=event, person=person, timestamp=data["birthdate"])

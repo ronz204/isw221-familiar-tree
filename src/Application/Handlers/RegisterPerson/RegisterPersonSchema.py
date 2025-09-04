@@ -1,5 +1,5 @@
 from datetime import date
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel, Field
 
 class RegisterPersonSchema(BaseModel):
@@ -12,3 +12,5 @@ class RegisterPersonSchema(BaseModel):
   age: int = Field(ge=0, le=100)
   birthdate: date
   deathdate: Optional[date] = None
+  
+  affinities: List[int] = Field(default_factory=list)
