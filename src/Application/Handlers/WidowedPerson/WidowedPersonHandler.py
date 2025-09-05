@@ -27,7 +27,8 @@ class WidowedPersonHandler(Handler[WidowedPersonSchema]):
     couple = relation.woman if relation.man == person else relation.man
     relation.status = Couple.PREVIOUS.value
     
-    couple.status = Status.WIDOWED.value
+    if couple.status != Status.DEATHED.value:
+      couple.status = Status.WIDOWED.value
     couple.emotional -= 10
 
     couple.save()

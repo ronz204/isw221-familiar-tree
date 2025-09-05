@@ -60,7 +60,10 @@ class DeathTrigger(Trigger):
   def reassign_guardians(self, deceased_parent: Person, minor_children: List[Person]):
     for child in minor_children:
       other_parent = self.get_living_parent(child, deceased_parent)
-      if other_parent: continue
+      if other_parent:
+        child.guard_id = other_parent.id
+        child.save()
+        continue
       
       new_guardian = self.find_suitable_guardian(child)
       

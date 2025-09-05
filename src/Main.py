@@ -50,7 +50,7 @@ notebook.add(RecentBirthsScreen(notebook, broker), text="Busqueda #7")
 
 """ scheduler.start(DeathTrigger(broker), "death", 5) """
 
-""" scheduler.start(BirthTrigger(broker), "birth", 10) """
+""" scheduler.start(BirthTrigger(broker), "birth", 5) """
 
 """ scheduler.start(BirthdayTrigger(broker), "birthday", 5) """
 
